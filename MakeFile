@@ -1,0 +1,32 @@
+CXX = g++-13
+CXXFLAGS = -I/usr/include/SDL2 -D_REENTRANT -Wall -Wextra -O2
+LDFLAGS = -lSDL2
+
+# Directories
+SRC_DIR = .
+OBJ_DIR = ./build
+BIN_DIR = ./bin
+
+# Source files
+SRC = $(wildcard $(SRC_DIR)/tiles/*.cpp $(SRC_DIR)/ui/*.cpp)
+OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+
+# Output binary
+TARGET = $(BIN_DIR)/main
+
+all: $(TARGET)
+
+# Create the binary
+$(TARGET): $(OBJ)
+	mkdir -p $(BIN_DIR)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
+
+# Compile source files to object files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+clean:
+	rm -rf $(OBJ_DIR) $(BIN_DIR)
+
+.PHONY: all clean

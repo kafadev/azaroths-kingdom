@@ -1,0 +1,1 @@
+g++-13 -g ui/main.cpp ui/HexGrid.cpp  tiles/TileManager.cpp tiles/Tile.cpp -o game -I/usr/include/SDL2 -D_REENTRANT -lSDL2
