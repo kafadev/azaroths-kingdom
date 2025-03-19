@@ -146,7 +146,7 @@ void HexGrid::rippleEffect(SDL_Renderer* renderer, Tile* unusedTile) {
             tile->setColor(WHITE);
         }
 
-        render(renderer);
+        //render(renderer);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(250));
 
@@ -156,7 +156,7 @@ void HexGrid::rippleEffect(SDL_Renderer* renderer, Tile* unusedTile) {
             tile->setColor(RED);
         }
 
-        render(renderer);
+        //render(renderer);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(250));
 

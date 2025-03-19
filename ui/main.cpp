@@ -58,18 +58,19 @@ int main(int argc, char* argv[]) {
             running = false;
         }
 
-        if (event.type == SDL_KEYUP) {
+        hexGrid.render(renderer);
 
-            tm.getTile(0, 0)->setColor(GREEN);
-            hexGrid.render(renderer);
-        }
+        // if (event.type == SDL_KEYUP) {
 
-        if (event.type == SDL_KEYDOWN) {
-            hexGrid.rippleEffect(renderer, tm.getTile(0, 0));
-            // tm.getTile(0, 0)->setColor(RED);
-            // hexGrid.render(renderer);
+        //     tm.getTile(0, 0)->setColor(GREEN);
+        //     hexGrid.render(renderer);
+        // }
 
-        }
+        // if (event.type == SDL_KEYDOWN) {
+        //     hexGrid.rippleEffect(renderer, tm.getTile(0, 0));
+        //     // tm.getTile(0, 0)->setColor(RED);
+
+        // }
     }
 
     // if program has finished running, gracefully exit.
