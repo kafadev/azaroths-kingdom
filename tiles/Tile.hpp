@@ -31,6 +31,7 @@ class Tile {
         /* Public Tile Information */
         Color getColor();
         Coords getCoords();
+        //std::vector<Tile*> getConnectedTiles();
 
         /* Public Setters */
         void setCoords(Coords newCoords);
@@ -42,4 +43,6 @@ class Tile {
         // You can add any private members or helper methods here
         std::string name;
         Coords coords;
+
+        //std::vector<Tile*> connectedTiles; 
 };

@@ -225,13 +225,13 @@ void TileManager::generateRandomGrid() {
            float x = rand() % 100;
 
             if (x >= 75) {
-                allTiles[r][c] = new Tile("Green Tile", YELLOW);
+                allTiles[r][c] = new Tile("Yellow Tile", WHITE);
             }
             else if (x >= 25) {
-                allTiles[r][c] = new Tile("Green Tile", GREEN);
+                allTiles[r][c] = new Tile("Green Tile", BROWN);
             }
             else {
-                allTiles[r][c] = new Tile("White Tile", BLUE);
+                allTiles[r][c] = new Tile("White Tile", GRAY);
             }
             
         }

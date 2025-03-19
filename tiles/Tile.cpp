@@ -42,3 +42,7 @@ bool Tile::checkColor(Color color) {
             (this->color.g == color.g) &&
             (this->color.r == color.r); 
 }
+
+// std::vector<Tile*> Tile::getConnectedTiles() {
+//     return this->connectedTiles;
+// }

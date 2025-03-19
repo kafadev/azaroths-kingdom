@@ -1,4 +1,5 @@
-// HexGrid.cpp
+// HexGrid class exists to manage all the UI rendering aspects of the Tile Grid
+/* Used as an interface with SDL2 */
 #include "HexGrid.hpp"
 #include <cmath>
 #include <vector>
@@ -38,24 +39,62 @@ void HexGrid::setColor(SDL_Renderer* renderer, const Color color) {
 // (Generated Code)
 // Draw a single flat-topped hexagon centered at (x, y).
 // For a flat-topped hexagon, we use angles of 0°, 60°, 120°, …, 300°.
+// void HexGrid::drawHexagon(SDL_Renderer* renderer, Coords tileCoords, const Color color) {
+//     const int NUM_POINTS = 6;
+//     SDL_Point points[NUM_POINTS + 1]; // +1 to close the polygon
+
+//     // For a flat-topped hexagon, the vertices are computed at:
+//     // angle = 0, 60, 120, 180, 240, and 300 degrees (converted to radians)
+//     for (int i = 0; i < NUM_POINTS; ++i) {
+//         float angle = M_PI / 3.0f * i; // M_PI/3 = 60° in radians
+//         points[i].x = static_cast<int>(tileCoords.x + cRadius * cos(angle));
+//         points[i].y = static_cast<int>(tileCoords.y + cRadius * sin(angle));
+//     }
+//     // Close the hexagon by repeating the first point.
+//     points[NUM_POINTS] = points[0];
+
+//     // Set the drawing color (e.g., white) and draw the hexagon outline.
+//     setColor(renderer, color);
+//     SDL_RenderDrawLines(renderer, points, NUM_POINTS + 1);
+// }
+
+/* Generated function based on previous drawHexagon that fills in the hexagons with respective color */
 void HexGrid::drawHexagon(SDL_Renderer* renderer, Coords tileCoords, const Color color) {
     const int NUM_POINTS = 6;
-    SDL_Point points[NUM_POINTS + 1]; // +1 to close the polygon
+    SDL_Vertex vertices[NUM_POINTS];
 
-    // For a flat-topped hexagon, the vertices are computed at:
-    // angle = 0, 60, 120, 180, 240, and 300 degrees (converted to radians)
+    // Compute the hexagon vertices
     for (int i = 0; i < NUM_POINTS; ++i) {
-        float angle = M_PI / 3.0f * i; // M_PI/3 = 60° in radians
-        points[i].x = static_cast<int>(tileCoords.x + cRadius * cos(angle));
-        points[i].y = static_cast<int>(tileCoords.y + cRadius * sin(angle));
+        float angle = M_PI / 3.0f * i;
+        vertices[i].position.x = tileCoords.x + cRadius * cos(angle);
+        vertices[i].position.y = tileCoords.y + cRadius * sin(angle);
+        vertices[i].color = { (unsigned char) color.r, (unsigned char) color.g, (unsigned char) color.b, (unsigned char) color.a }; // SDL_Color format
     }
-    // Close the hexagon by repeating the first point.
+
+    // Set the drawing color (if needed)
+    setColor(renderer, color);
+
+    // Draw the filled hexagon using triangles (fan method)
+    for (int i = 1; i < NUM_POINTS - 1; ++i) {
+        SDL_Vertex triangle[3] = {
+            vertices[0],
+            vertices[i],
+            vertices[i + 1]
+        };
+        SDL_RenderGeometry(renderer, nullptr, triangle, 3, nullptr, 0);
+    }
+
+    // Draw the hexagon outline (optional)
+    SDL_Point points[NUM_POINTS + 1];
+    for (int i = 0; i < NUM_POINTS; ++i) {
+        points[i].x = static_cast<int>(vertices[i].position.x);
+        points[i].y = static_cast<int>(vertices[i].position.y);
+    }
     points[NUM_POINTS] = points[0];
 
-    // Set the drawing color (e.g., white) and draw the hexagon outline.
-    setColor(renderer, color);
     SDL_RenderDrawLines(renderer, points, NUM_POINTS + 1);
 }
+
 
 // Render a grid of flat-topped hexagons/
 void HexGrid::render(SDL_Renderer* renderer) {

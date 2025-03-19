@@ -14,4 +14,7 @@ constexpr Color WHITE  { 255,   255,   255, 255 };
 constexpr Color BLACK  { 0,   0,   0, 255 };
 constexpr Color YELLOW  { 255,   255,   0, 255 };
 
+constexpr Color BROWN  { 139, 69, 19, 255 };
+constexpr Color GRAY  { 128,   128,   128, 255 };
+
 
