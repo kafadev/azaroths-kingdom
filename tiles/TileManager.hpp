@@ -1,5 +1,5 @@
-#define ROWS 5
-#define COLS 6
+#define ROWS 7
+#define COLS 14
 
 #include <vector>
 #include <string>

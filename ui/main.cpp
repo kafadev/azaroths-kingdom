@@ -49,6 +49,9 @@ int main(int argc, char* argv[]) {
     // update screen with new changes
     SDL_RenderPresent(renderer);
 
+    // enable capturing of mouse
+    SDL_CaptureMouse(SDL_TRUE);
+
     // run infinitely to check for events
     while (running) {
 

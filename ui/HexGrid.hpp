@@ -11,6 +11,7 @@ public:
     void setColor(SDL_Renderer* renderer, const Color color);
     void updateDisplayedTileColor(SDL_Renderer* renderer, Tile* tile);
     void rippleEffect(SDL_Renderer* renderer, Tile* unusedTile);
+    Tile* getTileFromCoords(Coords coords);
 
 private:
 

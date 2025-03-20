@@ -85,6 +85,7 @@ void HexGrid::drawHexagon(SDL_Renderer* renderer, Coords tileCoords, const Color
     }
 
     // Draw the hexagon outline (optional)
+    setColor(renderer, BLACK);
     SDL_Point points[NUM_POINTS + 1];
     for (int i = 0; i < NUM_POINTS; ++i) {
         points[i].x = static_cast<int>(vertices[i].position.x);
@@ -224,4 +225,10 @@ void HexGrid::rippleEffect(SDL_Renderer* renderer, Tile* unusedTile) {
     //     r = (r + 1) % ROWS;
 
     // }
+}
+
+Tile* HexGrid::getTileFromCoords(Coords coords) {
+
+    return nullptr;
+
 }
