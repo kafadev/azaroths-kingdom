@@ -100,6 +100,8 @@ void HexGrid::drawHexagon(SDL_Renderer* renderer, Coords tileCoords, const Color
 // Render a grid of flat-topped hexagons/
 void HexGrid::render(SDL_Renderer* renderer) {
 
+    std::this_thread::sleep_for(std::chrono::milliseconds(250));
+
     // Clear all items that existed before 
     setColor(renderer, BLACK); // create black background
     SDL_RenderClear(renderer);
@@ -166,12 +168,12 @@ struct pair_hash {
     }
 };
 
-void HexGrid::rippleEffect(SDL_Renderer* renderer, Tile* unusedTile) {
+void HexGrid::rippleEffect(SDL_Renderer* renderer, Tile* tile) {
 
-    std::unordered_set<std::pair<int, int>, pair_hash> old_items = {std::make_pair(0, 0)};
+    std::unordered_set<std::pair<int, int>, pair_hash> old_items = {std::make_pair(tile->getCoords().x, tile->getCoords().y)};
     std::unordered_set<std::pair<int, int>, pair_hash> new_items = {};
 
-    const int ITERATIONS = 200;
+    const int ITERATIONS = 5;
 
     for (int i = 0; i < ITERATIONS; i++) {
         // get all new items

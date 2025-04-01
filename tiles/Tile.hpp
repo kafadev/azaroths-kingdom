@@ -40,9 +40,6 @@ class Tile {
 
 
     private:
-        // You can add any private members or helper methods here
         std::string name;
         Coords coords;
-
-        //std::vector<Tile*> connectedTiles; 
 };

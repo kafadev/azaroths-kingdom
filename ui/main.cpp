@@ -4,9 +4,14 @@
 #include <memory>
 #include <iostream>
 #include <memory>
+#include <thread>
 
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
+
+void task(HexGrid* hexGrid, TileManager* tm, SDL_Renderer* renderer) {
+    hexGrid->rippleEffect(renderer, tm->getTile(0, 0));
+}
 
 int main(int argc, char* argv[]) {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -63,17 +68,17 @@ int main(int argc, char* argv[]) {
 
         hexGrid.render(renderer);
 
-        // if (event.type == SDL_KEYUP) {
+        if (event.type == SDL_KEYUP) {
 
-        //     tm.getTile(0, 0)->setColor(GREEN);
-        //     hexGrid.render(renderer);
-        // }
+            tm.getTile(0, 0)->setColor(GREEN);
+            hexGrid.render(renderer);
+        }
 
-        // if (event.type == SDL_KEYDOWN) {
-        //     hexGrid.rippleEffect(renderer, tm.getTile(0, 0));
-        //     // tm.getTile(0, 0)->setColor(RED);
+        if (event.type == SDL_KEYDOWN) {
+            std::thread t1(task, &hexGrid, &tm, renderer);
+            // tm.getTile(0, 0)->setColor(RED);
 
-        // }
+        }
     }
 
     // if program has finished running, gracefully exit.
@@ -82,3 +87,5 @@ int main(int argc, char* argv[]) {
     SDL_Quit();
     return 0;
 }
+
+
