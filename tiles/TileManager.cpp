@@ -1,5 +1,5 @@
 #include "TileManager.hpp"
-#include <algorithm>  // For std::remove_if
+#include <algorithm>  
 #include <iostream>
 #include <cassert> 
 #include <vector> 

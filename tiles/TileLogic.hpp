@@ -1,7 +1,4 @@
-/* TileLogic.hpp */
-
 #include "TileManager.hpp"
-
 
 /* Possibly Refactor into a class system later */
 struct Empire {
