@@ -2,6 +2,8 @@
 
 #include "TileManager.hpp"
 
+
+/* Possibly Refactor into a class system later */
 struct Empire {
     int food;               /* Used to calculate growth */
     int population;         /* Used to calculate growth */

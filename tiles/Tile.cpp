@@ -5,6 +5,15 @@
 #include <vector>
 #include "Tile.hpp"
 
+/* const map of colors to description for all tiles */
+std::map<Color, std::string> Tile::tileTypeToColor = {
+    {GRAY, "Non-Fertile"},
+    {BROWN, "Mineral-Rich"},
+    {YELLOW, "Fertile"},
+    {GREEN, "Wildcard"},
+    {BLUE, "Ocean"},
+};
+
 Tile::~Tile() {
     // destroy something?
 }
@@ -43,6 +52,9 @@ bool Tile::checkColor(Color color) {
             (this->color.r == color.r); 
 }
 
+std::string Tile::getTileType() {
+    return tileTypeToColor
+}
 // std::vector<Tile*> Tile::getConnectedTiles() {
 //     return this->connectedTiles;
 // }

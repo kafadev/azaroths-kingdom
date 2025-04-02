@@ -7,6 +7,7 @@
 #include <iterator>   // If needed, for iterators
 #include <vector>     // If needed, for STL containers (e.g., std::vector)
 #include "Colors.hpp"
+#include <map>
 
 struct Coords {
     int x;
@@ -39,16 +40,10 @@ class Tile {
         void setColor(Color color);
         bool checkColor(Color color);
 
-        const std::map<Color, std::string> tileTypeToColor = {
-            {GRAY, "Non-Fertile"},
-            {BROWN, "Mineral-Rich"},
-            {YELLOW, "Fertile"},
-            {GREEN, "Wildcard"},
-            {BLUE, "Ocean"},
-        };
-
-
     private:
         std::string name;
         Coords coords;
+
+    protected:
+        static std::map<Color, std::string> tileTypeToColor;
 };
