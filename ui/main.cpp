@@ -9,8 +9,26 @@
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
 
-void task(HexGrid* hexGrid, TileManager* tm, SDL_Renderer* renderer) {
-    hexGrid->rippleEffect(renderer, tm->getTile(0, 0));
+int colorRandomTilesYellow(void* data) {
+    //HexGrid* hexGrid, TileManager* tm, SDL_Renderer* renderer 
+    //hexGrid->rippleEffect(renderer, tm->getTile(0, 0));
+    TileManager* tm = (TileManager*) data;
+
+    for (int i = 0; i < 5; i++) {
+        
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+
+        float r = rand() % ROWS;
+        float c = rand() % COLS;
+    
+        tm->getTile(r, c)->setColor(YELLOW);
+    }
+   
+
+    //successful function
+    return 0;
+
+
 }
 
 int main(int argc, char* argv[]) {
@@ -75,7 +93,8 @@ int main(int argc, char* argv[]) {
         }
 
         if (event.type == SDL_KEYDOWN) {
-            std::thread t1(task, &hexGrid, &tm, renderer);
+
+            SDL_CreateThread(colorRandomTilesYellow, "test", &tm);
             // tm.getTile(0, 0)->setColor(RED);
 
         }

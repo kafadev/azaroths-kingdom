@@ -100,7 +100,7 @@ void HexGrid::drawHexagon(SDL_Renderer* renderer, Coords tileCoords, const Color
 // Render a grid of flat-topped hexagons/
 void HexGrid::render(SDL_Renderer* renderer) {
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(250));
+    //std::this_thread::sleep_for(std::chrono::milliseconds(250));
 
     // Clear all items that existed before 
     setColor(renderer, BLACK); // create black background
