@@ -10,13 +10,6 @@
 class TileManager {
     private:
         std::vector<std::vector<Tile*>> allTiles;  
-        std::map<std::string, Color> tileTypeToColor = {
-            {"Non-Fertile", GRAY},
-            {"Mineral-Rich", BROWN},
-            {"Fertile", YELLOW},
-            {"Wildcard", GREEN},
-            {"Ocean", BLUE},
-        };
 
     public:
         // Destructor to clean up dynamically allocated tiles

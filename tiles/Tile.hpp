@@ -31,12 +31,21 @@ class Tile {
         /* Public Tile Information */
         Color getColor();
         Coords getCoords();
+        std::string getTileType();
         //std::vector<Tile*> getConnectedTiles();
 
         /* Public Setters */
         void setCoords(Coords newCoords);
         void setColor(Color color);
         bool checkColor(Color color);
+
+        const std::map<Color, std::string> tileTypeToColor = {
+            {GRAY, "Non-Fertile"},
+            {BROWN, "Mineral-Rich"},
+            {YELLOW, "Fertile"},
+            {GREEN, "Wildcard"},
+            {BLUE, "Ocean"},
+        };
 
 
     private:
