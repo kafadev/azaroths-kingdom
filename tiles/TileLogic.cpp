@@ -14,13 +14,8 @@ TileLogic::TileLogic(TileManager* tm) {
 /* Short helper function to create a dummy empire */
 
 void create_empire(int f, int p, int m, Coords coords, std::vector<Empire> *empires) {
-    Empire e = {
-        f, 
-        p,
-        0, 
-        m,
-        coords
-    };
+
+    Empire* e = new Empire();
 
     empires->push_back(e);
 }

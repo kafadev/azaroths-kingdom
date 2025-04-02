@@ -2,8 +2,9 @@
 #include <Coords.hpp>
 
 struct Yields {
-
-
+    int food;               /* Used to calculate growth */
+    int population;         /* Used to calculate growth */
+    int minerals;   
 };
 
 class Empire {
@@ -12,12 +13,13 @@ class Empire {
         Empire();
         ~Empire();
 
-        Yields calculateYields();
+        Yields* calculateYields();
         bool isEmpireGrowing();
-        double calculateInfluence();
-        void updateEmpire();
+        double calculateInfluence(Yields* yields);
+        void updateEmpire(Yields* yields);
 
-
+        void expand();
+        void shrink();
 
 
     private: 
@@ -27,7 +29,5 @@ class Empire {
         int minerals;           /* Used for military strength */
 
         Coords capitalCoords;
-
-
-
+        std::vector<Coords> towns;
 };

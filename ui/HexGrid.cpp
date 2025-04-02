@@ -14,7 +14,7 @@ HexGrid::HexGrid(TileManager* tm) {
     startingCoords.y = 100;
 
     tm->generateRandomGrid();
-    tileManager = tm;
+    this->tm = tm;
 }   
 
 /* Calculate the height of the entire hexagon (diameter from one side to another) */
@@ -124,7 +124,7 @@ void HexGrid::render(SDL_Renderer* renderer) {
             for (int r = 0; r < rows; r++) {
 
                 // Get Tile information
-                Color tileColor = tileManager->getTile(r, c)->getColor();
+                Color tileColor = tm->getTile(r, c)->getColor();
                 Coords tileCoords {
                     static_cast<int>(startingCoords.x * x_off), 
                      static_cast<int>(startingCoords.y + (r * cRadius * 2))
@@ -136,7 +136,7 @@ void HexGrid::render(SDL_Renderer* renderer) {
             for (int r = 0; r < rows; r++) {
 
                 // Get Tile information
-                Color tileColor = tileManager->getTile(r, c)->getColor();
+                Color tileColor = tm->getTile(r, c)->getColor();
 
                 Coords tileCoords {
                      static_cast<int>(startingCoords.x  * x_off), 
@@ -184,7 +184,7 @@ void HexGrid::rippleEffect(SDL_Renderer* renderer, Tile* tile) {
 
         // set old items color to white
         for (auto item : old_items) {
-            Tile* tile = tileManager->getTile(item.first, item.second);
+            Tile* tile = tm->getTile(item.first, item.second);
             tile->setColor(WHITE);
         }
 
@@ -194,7 +194,7 @@ void HexGrid::rippleEffect(SDL_Renderer* renderer, Tile* tile) {
 
         // set new items color to red
         for (auto item : old_items) {
-            Tile* tile = tileManager->getTile(item.first, item.second);
+            Tile* tile = tm->getTile(item.first, item.second);
             tile->setColor(RED);
         }
 
@@ -213,7 +213,7 @@ void HexGrid::rippleEffect(SDL_Renderer* renderer, Tile* tile) {
     // while (true) {
 
 
-    //     Tile* tile = tileManager->getTile(r, 0);
+    //     Tile* tile = tm->getTile(r, 0);
 
     //     if (tile->checkColor(RED)) {
     //         tile->setColor(BLUE);
