@@ -1,6 +1,6 @@
 #include "TileManager.hpp"
 
-/* Possibly Refactor into a class system later */
+/* Empire Info Holder :: Possibly Refactor into a class system later */
 struct Empire {
     int food;               /* Used to calculate growth */
     int population;         /* Used to calculate growth */
@@ -14,8 +14,10 @@ class TileLogic {
     public:
         ~TileLogic();
 
-        TileLogic();
+        TileLogic(TileManager* tm);
 
     private:
+        TileManager* tm; 
+        std::vector<Empire> empires; /* List of Empires, current naive implementation */
 
 };

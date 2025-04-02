@@ -6,7 +6,6 @@
 #include <functional>
 #include <cstdlib>
 
-
 // allocate a 2d array of tiles
 TileManager::TileManager() {
     // Resize the outer vector to have `rows` elements

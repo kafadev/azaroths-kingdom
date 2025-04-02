@@ -6,6 +6,7 @@
 #include <set>
 #include <map> 
 #include "Tile.hpp"
+#include <Coords.hpp>
 
 class TileManager {
     private:
