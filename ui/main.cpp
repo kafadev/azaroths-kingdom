@@ -20,8 +20,12 @@ int colorRandomTilesYellow(void* data) {
 
         float r = rand() % ROWS;
         float c = rand() % COLS;
+
+        SDL_Log(tm->getTile(r,c)->getTileType().c_str());
     
         tm->getTile(r, c)->setColor(YELLOW);
+
+        SDL_Log(tm->getTile(r,c)->getTileType().c_str());
     }
    
 
@@ -95,7 +99,6 @@ int main(int argc, char* argv[]) {
         if (event.type == SDL_KEYDOWN) {
 
             SDL_CreateThread(colorRandomTilesYellow, "test", &tm);
-            // tm.getTile(0, 0)->setColor(RED);
 
         }
     }

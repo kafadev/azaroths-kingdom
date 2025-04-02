@@ -8,12 +8,14 @@
 #include <vector>     // If needed, for STL containers (e.g., std::vector)
 #include "Colors.hpp"
 #include <map>
+#include "Coords.hpp"
 
-struct Coords {
-    int x;
-    int y;
+/* Generated Comparator for Color Struct */
+struct ColorComparator {
+    bool operator()(const Color& lhs, const Color& rhs) const {
+        return std::tie(lhs.r, lhs.g, lhs.b, lhs.a) < std::tie(rhs.r, rhs.g, rhs.b, rhs.a);
+    }
 };
-
 
 class Tile {
     public:
@@ -23,17 +25,11 @@ class Tile {
         // Default Constructor: Initializes connectedTiles to nullptr
         Tile(std::string name, const Color color);
 
-        /* Tile Functions */
-        const std::string& getName();
-
-        /* UI Information */
-        Color color;
-
         /* Public Tile Information */
         Color getColor();
         Coords getCoords();
         std::string getTileType();
-        //std::vector<Tile*> getConnectedTiles();
+        const std::string& getName();
 
         /* Public Setters */
         void setCoords(Coords newCoords);
@@ -43,7 +39,8 @@ class Tile {
     private:
         std::string name;
         Coords coords;
+        Color color;
 
     protected:
-        static std::map<Color, std::string> tileTypeToColor;
+        static std::map<Color, std::string, ColorComparator> TypeToColor;
 };
