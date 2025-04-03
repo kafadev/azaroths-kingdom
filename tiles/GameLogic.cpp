@@ -1,4 +1,4 @@
-#include "TileLogic.hpp"
+#include "GameLogic.hpp"
 
 /* Short helper functions */
 /* Short helper function to create a dummy empire */

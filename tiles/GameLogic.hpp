@@ -6,7 +6,6 @@
 class TileLogic {
     public:
         ~TileLogic();
-
         TileLogic(TileManager* tm);
 
     private:
