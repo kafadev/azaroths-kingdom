@@ -1,22 +1,21 @@
+#pragma once
+
 #define ROWS 7
 #define COLS 14
+
+#include <SDL2/SDL.h>
 
 #include <vector>
 #include <string>
 #include <set>
 #include <map> 
+#include <unordered_set>
 #include "Tile.hpp"
+
 
 class TileManager {
     private:
         std::vector<std::vector<Tile*>> allTiles;  
-        std::map<std::string, Color> tileTypeToColor = {
-            {"Non-Fertile", GRAY},
-            {"Mineral-Rich", BROWN},
-            {"Fertile", YELLOW},
-            {"Wildcard", GREEN},
-            {"Ocean", BLUE},
-        };
 
     public:
         // Destructor to clean up dynamically allocated tiles
@@ -37,6 +36,10 @@ class TileManager {
         Tile *getTopLeftItem(int r, int c);
         Tile *getBottomLeftItem(int r, int c);
         Tile *getBottomRightItem(int r, int c);
-        std::set<Tile *> getConnectedTiles(Tile *tile);
+        std::unordered_set<Tile*>  getConnectedTiles(Tile *tile);
+        std::unordered_set<Tile*>  getConnectedTilesInRadius(Tile* tile, int radius);
         void generateRandomGrid();
+
+        void colorNearbyTiles(Tile* tile);
+
 };

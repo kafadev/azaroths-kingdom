@@ -14,7 +14,7 @@ HexGrid::HexGrid(TileManager* tm) {
     startingCoords.y = 100;
 
     tm->generateRandomGrid();
-    tileManager = tm;
+    this->tm = tm;
 }   
 
 /* Calculate the height of the entire hexagon (diameter from one side to another) */
@@ -36,27 +36,6 @@ void HexGrid::setColor(SDL_Renderer* renderer, const Color color) {
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 }
 
-// (Generated Code)
-// Draw a single flat-topped hexagon centered at (x, y).
-// For a flat-topped hexagon, we use angles of 0°, 60°, 120°, …, 300°.
-// void HexGrid::drawHexagon(SDL_Renderer* renderer, Coords tileCoords, const Color color) {
-//     const int NUM_POINTS = 6;
-//     SDL_Point points[NUM_POINTS + 1]; // +1 to close the polygon
-
-//     // For a flat-topped hexagon, the vertices are computed at:
-//     // angle = 0, 60, 120, 180, 240, and 300 degrees (converted to radians)
-//     for (int i = 0; i < NUM_POINTS; ++i) {
-//         float angle = M_PI / 3.0f * i; // M_PI/3 = 60° in radians
-//         points[i].x = static_cast<int>(tileCoords.x + cRadius * cos(angle));
-//         points[i].y = static_cast<int>(tileCoords.y + cRadius * sin(angle));
-//     }
-//     // Close the hexagon by repeating the first point.
-//     points[NUM_POINTS] = points[0];
-
-//     // Set the drawing color (e.g., white) and draw the hexagon outline.
-//     setColor(renderer, color);
-//     SDL_RenderDrawLines(renderer, points, NUM_POINTS + 1);
-// }
 
 /* Generated function based on previous drawHexagon that fills in the hexagons with respective color */
 void HexGrid::drawHexagon(SDL_Renderer* renderer, Coords tileCoords, const Color color) {
@@ -96,58 +75,131 @@ void HexGrid::drawHexagon(SDL_Renderer* renderer, Coords tileCoords, const Color
     SDL_RenderDrawLines(renderer, points, NUM_POINTS + 1);
 }
 
+/* Generated function to draw a singular digit */
+void drawDigit(SDL_Renderer* renderer, char digit, int x, int y) {
+    switch (digit) {
+        case '0':
+            SDL_RenderDrawLine(renderer, x, y, x + 4, y);   // Top
+            SDL_RenderDrawLine(renderer, x, y, x, y + 6);   // Left
+            SDL_RenderDrawLine(renderer, x + 4, y, x + 4, y + 6); // Right
+            SDL_RenderDrawLine(renderer, x, y + 6, x + 4, y + 6); // Bottom
+            break;
+        case '1':
+            SDL_RenderDrawLine(renderer, x + 2, y, x + 2, y + 6); // Vertical Line
+            break;
+        case '2':
+            SDL_RenderDrawLine(renderer, x, y, x + 4, y);   // Top
+            SDL_RenderDrawLine(renderer, x + 4, y, x + 4, y + 3); // Upper right
+            SDL_RenderDrawLine(renderer, x, y + 3, x + 4, y + 3); // Middle
+            SDL_RenderDrawLine(renderer, x, y + 3, x, y + 6); // Lower left
+            SDL_RenderDrawLine(renderer, x, y + 6, x + 4, y + 6); // Bottom
+            break;
+        case '3':
+            SDL_RenderDrawLine(renderer, x, y, x + 4, y);   // Top
+            SDL_RenderDrawLine(renderer, x + 4, y, x + 4, y + 6); // Right
+            SDL_RenderDrawLine(renderer, x, y + 3, x + 4, y + 3); // Middle
+            SDL_RenderDrawLine(renderer, x, y + 6, x + 4, y + 6); // Bottom
+            break;
+        case '4':
+            SDL_RenderDrawLine(renderer, x, y, x, y + 3);   // Left
+            SDL_RenderDrawLine(renderer, x + 4, y, x + 4, y + 6); // Right
+            SDL_RenderDrawLine(renderer, x, y + 3, x + 4, y + 3); // Middle
+            break;
+        case '5':
+            SDL_RenderDrawLine(renderer, x + 4, y, x, y);   // Top
+            SDL_RenderDrawLine(renderer, x, y, x, y + 3);   // Left
+            SDL_RenderDrawLine(renderer, x, y + 3, x + 4, y + 3); // Middle
+            SDL_RenderDrawLine(renderer, x + 4, y + 3, x + 4, y + 6); // Right
+            SDL_RenderDrawLine(renderer, x, y + 6, x + 4, y + 6); // Bottom
+            break;
+        case '6':
+            SDL_RenderDrawLine(renderer, x + 4, y, x, y);   // Top
+            SDL_RenderDrawLine(renderer, x, y, x, y + 6);   // Left
+            SDL_RenderDrawLine(renderer, x, y + 3, x + 4, y + 3); // Middle
+            SDL_RenderDrawLine(renderer, x + 4, y + 3, x + 4, y + 6); // Right
+            SDL_RenderDrawLine(renderer, x, y + 6, x + 4, y + 6); // Bottom
+            break;
+        case '7':
+            SDL_RenderDrawLine(renderer, x, y, x + 4, y);   // Top
+            SDL_RenderDrawLine(renderer, x + 4, y, x + 4, y + 6); // Right
+            break;
+        case '8':
+            SDL_RenderDrawLine(renderer, x, y, x + 4, y);   // Top
+            SDL_RenderDrawLine(renderer, x, y, x, y + 6);   // Left
+            SDL_RenderDrawLine(renderer, x + 4, y, x + 4, y + 6); // Right
+            SDL_RenderDrawLine(renderer, x, y + 3, x + 4, y + 3); // Middle
+            SDL_RenderDrawLine(renderer, x, y + 6, x + 4, y + 6); // Bottom
+            break;
+        case '9':
+            SDL_RenderDrawLine(renderer, x, y, x + 4, y);   // Top
+            SDL_RenderDrawLine(renderer, x, y, x, y + 3);   // Left
+            SDL_RenderDrawLine(renderer, x, y + 3, x + 4, y + 3); // Middle
+            SDL_RenderDrawLine(renderer, x + 4, y, x + 4, y + 6); // Right
+            SDL_RenderDrawLine(renderer, x, y + 6, x + 4, y + 6); // Bottom
+            break;
+    }
+}
 
-// Render a grid of flat-topped hexagons/
+/* Generated function that utilizes drawDigit to draw digits onto each tile */
+void drawNumber(SDL_Renderer* renderer, int num, int x, int y) {
+    // Convert number to string
+    std::string numStr = std::to_string(num);
+
+    // Loop through each character in the string and draw pixels
+    int xOffset = 0;
+    for (char digit : numStr) {
+        drawDigit(renderer, digit, x + xOffset, y);
+        xOffset += 6; // Move right for the next digit
+    }
+}
+
+/* Generated Render function :: generates hexagonal tile with filled color */
 void HexGrid::render(SDL_Renderer* renderer) {
-
-    // Clear all items that existed before 
-    setColor(renderer, BLACK); // create black background
+    // Clear the screen
+    setColor(renderer, BLACK); // Create black background
     SDL_RenderClear(renderer);
 
-    const int cols = COLS; // number of columns in the grid
-    const int rows = ROWS; // number of rows in the grid
+    const int cols = COLS; // Number of columns in the grid
+    const int rows = ROWS; // Number of rows in the grid
     const float x_modifier = 1.75 * (cRadius / 100);
     const float y_modifier = 2 - (1 - cRadius / 100);
     float x_off = 1;
 
     for (int c = 0; c < cols; c++) {
-        
-        // base case modifier
+        // Base case modifier
         if (c > 0) {
             x_off = x_off + x_modifier;
         }
-        
-        // generate the up shifted column
-        if (isEven(c)) { 
-            for (int r = 0; r < rows; r++) {
 
-                // Get Tile information
-                Color tileColor = tileManager->getTile(r, c)->getColor();
-                Coords tileCoords {
-                    static_cast<int>(startingCoords.x * x_off), 
-                     static_cast<int>(startingCoords.y + (r * cRadius * 2))
+        for (int r = 0; r < rows; r++) {
+            // Get Tile information
+            Color tileColor = tm->getTile(r, c)->getColor();
+
+            // Calculate hexagon center coordinates
+            Coords tileCoords;
+            if (isEven(c)) {
+                tileCoords = {
+                    static_cast<int>(startingCoords.x * x_off),
+                    static_cast<int>(startingCoords.y + (r * cRadius * 2))
                 };
-
-                drawHexagon(renderer, tileCoords, tileColor);
-            }
-        } else { // generate the down shifted column
-            for (int r = 0; r < rows; r++) {
-
-                // Get Tile information
-                Color tileColor = tileManager->getTile(r, c)->getColor();
-
-                Coords tileCoords {
-                     static_cast<int>(startingCoords.x  * x_off), 
-                     static_cast<int>((startingCoords.y * y_modifier) + (r * cRadius * 2))
+            } else {
+                tileCoords = {
+                    static_cast<int>(startingCoords.x * x_off),
+                    static_cast<int>((startingCoords.y * y_modifier) + (r * cRadius * 2))
                 };
-
-                drawHexagon(renderer, tileCoords, tileColor);
             }
+
+            // Draw the hexagon
+            drawHexagon(renderer, tileCoords, tileColor);
+
+            // Draw numbers manually as simple pixel-based digits
+            setColor(renderer, BLACK);
+            drawNumber(renderer, r, tileCoords.x - 8, tileCoords.y); // Draw r at left
+            drawNumber(renderer, c, tileCoords.x + 8, tileCoords.y); // Draw c at right
         }
-        
     }
 
-    // display updated changes
+    // Display updated changes
     SDL_RenderPresent(renderer);
 }
 
@@ -166,12 +218,12 @@ struct pair_hash {
     }
 };
 
-void HexGrid::rippleEffect(SDL_Renderer* renderer, Tile* unusedTile) {
+void HexGrid::rippleEffect(SDL_Renderer* renderer, Tile* tile) {
 
-    std::unordered_set<std::pair<int, int>, pair_hash> old_items = {std::make_pair(0, 0)};
+    std::unordered_set<std::pair<int, int>, pair_hash> old_items = {std::make_pair(tile->getCoords().x, tile->getCoords().y)};
     std::unordered_set<std::pair<int, int>, pair_hash> new_items = {};
 
-    const int ITERATIONS = 200;
+    const int ITERATIONS = 5;
 
     for (int i = 0; i < ITERATIONS; i++) {
         // get all new items
@@ -182,7 +234,7 @@ void HexGrid::rippleEffect(SDL_Renderer* renderer, Tile* unusedTile) {
 
         // set old items color to white
         for (auto item : old_items) {
-            Tile* tile = tileManager->getTile(item.first, item.second);
+            Tile* tile = tm->getTile(item.first, item.second);
             tile->setColor(WHITE);
         }
 
@@ -192,7 +244,7 @@ void HexGrid::rippleEffect(SDL_Renderer* renderer, Tile* unusedTile) {
 
         // set new items color to red
         for (auto item : old_items) {
-            Tile* tile = tileManager->getTile(item.first, item.second);
+            Tile* tile = tm->getTile(item.first, item.second);
             tile->setColor(RED);
         }
 
@@ -203,28 +255,6 @@ void HexGrid::rippleEffect(SDL_Renderer* renderer, Tile* unusedTile) {
         old_items.clear();
         std::swap(old_items, new_items);
     }
-
-
-
-    /* Unused Code : Loops forever through one column highlighting each item in red or blue */
-    // loop absolutely forever
-    // while (true) {
-
-
-    //     Tile* tile = tileManager->getTile(r, 0);
-
-    //     if (tile->checkColor(RED)) {
-    //         tile->setColor(BLUE);
-    //     } else {
-    //         tile->setColor(RED);
-    //     }
-    //     render(renderer);
-
-    //     std::this_thread::sleep_for(std::chrono::seconds(1));
-
-    //     r = (r + 1) % ROWS;
-
-    // }
 }
 
 Tile* HexGrid::getTileFromCoords(Coords coords) {

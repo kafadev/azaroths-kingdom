@@ -25,6 +25,6 @@ private:
     Coords startingCoords; 
 
     /* Actual Tile Data */
-    TileManager* tileManager;
+    TileManager* tm;
     
 };

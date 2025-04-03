@@ -7,12 +7,15 @@
 #include <iterator>   // If needed, for iterators
 #include <vector>     // If needed, for STL containers (e.g., std::vector)
 #include "Colors.hpp"
+#include <map>
+#include "Coords.hpp"
 
-struct Coords {
-    int x;
-    int y;
+/* Generated Comparator for Color Struct */
+struct ColorComparator {
+    bool operator()(const Color& lhs, const Color& rhs) const {
+        return std::tie(lhs.r, lhs.g, lhs.b, lhs.a) < std::tie(rhs.r, rhs.g, rhs.b, rhs.a);
+    }
 };
-
 
 class Tile {
     public:
@@ -22,27 +25,19 @@ class Tile {
         // Default Constructor: Initializes connectedTiles to nullptr
         Tile(std::string name, const Color color);
 
-        /* Tile Functions */
-        const std::string& getName();
-
-        /* UI Information */
-        Color color;
-
         /* Public Tile Information */
         Color getColor();
         Coords getCoords();
-        //std::vector<Tile*> getConnectedTiles();
+        std::string getTileType();
+        const std::string& getName();
 
         /* Public Setters */
         void setCoords(Coords newCoords);
         void setColor(Color color);
         bool checkColor(Color color);
 
-
     private:
-        // You can add any private members or helper methods here
         std::string name;
         Coords coords;
-
-        //std::vector<Tile*> connectedTiles; 
+        Color color;
 };

@@ -1,11 +1,11 @@
 #include "TileManager.hpp"
-#include <algorithm>  // For std::remove_if
+#include <algorithm>  
 #include <iostream>
 #include <cassert> 
 #include <vector> 
 #include <functional>
 #include <cstdlib>
-
+#include <unordered_set>
 
 // allocate a 2d array of tiles
 TileManager::TileManager() {
@@ -170,7 +170,7 @@ Tile* TileManager::getBottomRightItem(int r, int c) {
 }
 
 // helper function to push back
-void push_back_non_null(Tile* foundTile, std::set<Tile*>* tiles) {
+void push_back_non_null(Tile* foundTile, std::unordered_set<Tile*>* tiles) {
     if (foundTile) {
         tiles->insert(foundTile);
     }
@@ -185,14 +185,15 @@ void push_back_non_null(Tile* foundTile, std::set<Tile*>* tiles) {
     
     where * refers to a tile that is in usage
 */
-std::set<Tile*> TileManager::getConnectedTiles(Tile* tile) {
+std::unordered_set<Tile*> TileManager::getConnectedTiles(Tile* tile) {
 
-    // do some algorithm to determine using reverse or normal
-    bool use_reverse = true; // Hard coded true for now
+    std::unordered_set<Tile*> connectedTiles;
+    int tileRow = tile->getCoords().x;
+    int tileCol = tile->getCoords().y; 
 
-    std::set<Tile*> connectedTiles;
-    int tileRow = 0;
-    int tileCol = 0; 
+    bool use_reverse = (tileCol % 2 == 0);
+
+    SDL_Log("Getting Coords for tile at (%d, %d)", tileRow, tileCol);
 
     // use the reverse pattern
     if (use_reverse) {
@@ -214,6 +215,43 @@ std::set<Tile*> TileManager::getConnectedTiles(Tile* tile) {
     return connectedTiles;
 }
 
+/* Extension fo getConnectedTiles but in a radius r */
+/* Includes the current given tile as well. */
+std::unordered_set<Tile*> TileManager::getConnectedTilesInRadius(Tile* tile, int radius) {
+
+    std::unordered_set<Tile*> visitedTiles = {}; 
+    std::unordered_set<Tile*> nextTiles = getConnectedTiles(tile);
+    std::unordered_set<Tile*> tmpTiles;
+
+    for (int r = 0; r < radius; r++) {
+        for (auto* t : nextTiles) {
+            
+            SDL_Log("Acessing Tile (%d, %d)", t->getCoords().x, t->getCoords().y);
+
+            if (visitedTiles.find(t) == visitedTiles.end()) {
+
+                // set tile t to be visited
+                SDL_Log("Tile has not been visited, adding to visited set");
+                if (t != tile) {visitedTiles.insert(t);}
+
+                // run getConnectedTiles() on each tile t
+                SDL_Log("Investigating what this tile is connected to");
+                for (auto nt: getConnectedTiles(t)) {
+                    tmpTiles.insert(nt);
+                }
+            }
+        }
+        
+        SDL_Log("TmpTiles has %ld len", tmpTiles.size());
+        nextTiles.clear();
+        std::swap(nextTiles, tmpTiles);
+        
+    }
+
+    return visitedTiles;
+    
+}
+
 /* Assumes an existing array has been constructed, tries to generate random tiles for each item. */
 void TileManager::generateRandomGrid() {
 
@@ -233,6 +271,8 @@ void TileManager::generateRandomGrid() {
             else {
                 allTiles[r][c] = new Tile("White Tile", GRAY);
             }
+
+            allTiles[r][c]->setCoords(Coords{r, c});
             
         }
     }
@@ -246,5 +286,14 @@ Tile* TileManager::getTile(int r, int c) {
     assert(c < COLS);
 
     return allTiles[r][c];
+}
+
+void TileManager::colorNearbyTiles(Tile* tile) {
+
+    std::unordered_set<Tile*>  tiles = getConnectedTilesInRadius(tile, 4);
+
+    for (auto t : tiles) {
+        t->setColor(RED);
+    }
 
 }
