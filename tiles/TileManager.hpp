@@ -9,6 +9,7 @@
 #include <string>
 #include <set>
 #include <map> 
+#include <unordered_set>
 #include "Tile.hpp"
 
 
@@ -35,8 +36,8 @@ class TileManager {
         Tile *getTopLeftItem(int r, int c);
         Tile *getBottomLeftItem(int r, int c);
         Tile *getBottomRightItem(int r, int c);
-        std::set<Tile*> getConnectedTiles(Tile *tile);
-        std::set<Tile*> getConnectedTilesInRadius(Tile* tile, int radius);
+        std::unordered_set<Tile*>  getConnectedTiles(Tile *tile);
+        std::unordered_set<Tile*>  getConnectedTilesInRadius(Tile* tile, int radius);
         void generateRandomGrid();
 
         void colorNearbyTiles(Tile* tile);
