@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 #include <thread>
+#include <SDL2/SDL_mixer.h>
 
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
@@ -45,8 +46,57 @@ int colorNearbyTiles(void* data) {
     return 0;
 }
 
+int playMusic(void* data) {
+
+    // Load the WAV file
+    Mix_Chunk* sound = Mix_LoadWAV("/home/deven/Documents/coding/azaroths-kingdom/music/output.wav");
+    if (!sound) {
+        std::cerr << "Mix_LoadWAV failed: " << Mix_GetError() << std::endl;
+        Mix_CloseAudio();
+        Mix_Quit();
+        SDL_Quit();
+        return -1;
+    }
+
+    // Play the sound
+    while (true) {
+        Mix_PlayChannel(-1, sound, 0);
+    }
+
+    return 0;
+}
+
 int main(int argc, char* argv[]) {
+
+    /* Set up video-related things */
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        std::string error = std::string("SDL_Init(SDL_INIT_VIDEO) failed");
+        SDL_LogCritical(0, error.c_str());
+        SDL_Quit();
+        return -1;
+    }
+
+    /* Set up audio-related SDL items */
+    if (SDL_Init(SDL_INIT_AUDIO) < 0) {
+        std::string error = std::string("SDL_Init(SDL_INIT_AUDIO) failed");
+        SDL_LogCritical(0, error.c_str());
+        SDL_Quit();
+        return -1;
+    }
+
+    if (Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG) == 0) {
+        std::string error = std::string("Mix_Init failed: ") + Mix_GetError();
+        SDL_LogCritical(0, error.c_str());
+        SDL_Quit();
+        return -1;
+    }
+
+    // Open audio device
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        std::string error = std::string("Mix_Init failed: ") + Mix_GetError();
+        SDL_LogCritical(0, error.c_str());
+        Mix_Quit(); // done here because the last if statement initialized this
+        SDL_Quit();
         return -1;
     }
 
@@ -89,6 +139,9 @@ int main(int argc, char* argv[]) {
     // enable capturing of mouse
     SDL_CaptureMouse(SDL_TRUE);
 
+    // run loop of music
+    SDL_CreateThread(playMusic, "music", nullptr);
+
     // run infinitely to check for events
     while (running) {
 
@@ -97,13 +150,14 @@ int main(int argc, char* argv[]) {
         if (event.type == SDL_QUIT) {
             running = false;
         }
-
+        
+        // render & refresh all the time (checking for updates)
         hexGrid.render(renderer);
 
         if (event.type == SDL_KEYDOWN) {
             
             SDL_Log("Thread Activated");
-            SDL_CreateThread(colorNearbyTiles, "test", &tm);
+            SDL_CreateThread(colorNearbyTiles, "test", &tm); // currently hardcoded to 3
 
         }
     }
