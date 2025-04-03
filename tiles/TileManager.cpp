@@ -186,12 +186,15 @@ void push_back_non_null(Tile* foundTile, std::set<Tile*>* tiles) {
 */
 std::set<Tile*> TileManager::getConnectedTiles(Tile* tile) {
 
-    // do some algorithm to determine using reverse or normal
-    bool use_reverse = true; // Hard coded true for now
-
     std::set<Tile*> connectedTiles;
-    int tileRow = 0;
-    int tileCol = 0; 
+    int tileRow = tile->getCoords().x;
+    int tileCol = tile->getCoords().y; 
+
+    bool use_reverse = (tileCol % 2 == 0);
+
+    std::string debugMessage = "Getting Coords for tile at " + std::to_string(tileRow) + ", " + std::to_string(tileCol);
+
+    SDL_Log(debugMessage.c_str());
 
     // use the reverse pattern
     if (use_reverse) {
@@ -232,6 +235,8 @@ void TileManager::generateRandomGrid() {
             else {
                 allTiles[r][c] = new Tile("White Tile", GRAY);
             }
+
+            allTiles[r][c]->setCoords(Coords{r, c});
             
         }
     }
@@ -245,5 +250,14 @@ Tile* TileManager::getTile(int r, int c) {
     assert(c < COLS);
 
     return allTiles[r][c];
+}
+
+void TileManager::colorNearbyTiles(Tile* tile) {
+
+    std::set<Tile*> tiles = getConnectedTiles(tile);
+
+    for (auto t : tiles) {
+        t->setColor(RED);
+    }
 
 }

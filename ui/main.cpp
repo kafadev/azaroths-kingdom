@@ -1,5 +1,4 @@
 // main.cpp
-#include <SDL2/SDL.h>
 #include "HexGrid.hpp"
 #include <memory>
 #include <iostream>
@@ -31,8 +30,19 @@ int colorRandomTilesYellow(void* data) {
 
     //successful function
     return 0;
+}
 
+int colorNearbyTiles(void* data) {
+    TileManager* tm = (TileManager*) data;
+    // std::set<Tile*> tiles = tm->getConnectedTiles(tm->getTile(3,3));
 
+    // for (auto t : tiles) {
+    //     std::string s = std::to_string(t->getCoords().x) + " " + std::to_string(t->getCoords().y);
+    //     SDL_Log(s.c_str());
+    // }
+    tm->colorNearbyTiles(tm->getTile(3,3));
+
+    return 0;
 }
 
 int main(int argc, char* argv[]) {
@@ -90,15 +100,10 @@ int main(int argc, char* argv[]) {
 
         hexGrid.render(renderer);
 
-        if (event.type == SDL_KEYUP) {
-
-            tm.getTile(0, 0)->setColor(GREEN);
-            hexGrid.render(renderer);
-        }
-
         if (event.type == SDL_KEYDOWN) {
-
-            SDL_CreateThread(colorRandomTilesYellow, "test", &tm);
+            
+            SDL_Log("Thread Activated");
+            SDL_CreateThread(colorNearbyTiles, "test", &tm);
 
         }
     }

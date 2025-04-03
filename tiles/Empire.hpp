@@ -11,6 +11,7 @@ class Empire {
 
     public: 
         Empire();
+        Empire(int food, int population,  int number_of_towns, int minerals);
         ~Empire();
 
         Yields* calculateYields();

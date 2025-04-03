@@ -8,7 +8,7 @@ class TileLogic {
         TileLogic(TileManager* tm);
 
     private:
-        TileManager* tm; 
-        std::vector<Empire*> empires; /* List of Empires, current naive implementation */
+        static TileManager* tm; 
+        static std::vector<Empire*> empires; /* List of Empires, current naive implementation */
 
 };

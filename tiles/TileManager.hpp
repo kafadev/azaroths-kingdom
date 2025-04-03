@@ -1,11 +1,14 @@
 #define ROWS 7
 #define COLS 14
 
+#include <SDL2/SDL.h>
+
 #include <vector>
 #include <string>
 #include <set>
 #include <map> 
 #include "Tile.hpp"
+
 
 class TileManager {
     private:
@@ -30,6 +33,9 @@ class TileManager {
         Tile *getTopLeftItem(int r, int c);
         Tile *getBottomLeftItem(int r, int c);
         Tile *getBottomRightItem(int r, int c);
-        std::set<Tile *> getConnectedTiles(Tile *tile);
+        std::set<Tile*> getConnectedTiles(Tile *tile);
         void generateRandomGrid();
+
+        void colorNearbyTiles(Tile* tile);
+
 };

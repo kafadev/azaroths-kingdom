@@ -6,7 +6,7 @@
 #include "Tile.hpp"
 
 /* const map of colors to description for all tiles */
-std::map<Color, std::string, ColorComparator> tileTypeToColor = {
+static std::map<Color, std::string, ColorComparator> ColorToType = {
     {GRAY, "Non-Fertile"},
     {BROWN, "Mineral-Rich"},
     {YELLOW, "Fertile"},
@@ -54,5 +54,5 @@ bool Tile::checkColor(Color color) {
 }
 
 std::string Tile::getTileType() {
-    return tileTypeToColor[this->color];
+    return ColorToType[this->color];
 }

@@ -40,7 +40,4 @@ class Tile {
         std::string name;
         Coords coords;
         Color color;
-
-    protected:
-        static std::map<Color, std::string, ColorComparator> TypeToColor;
 };
