@@ -1,3 +1,5 @@
+#pragma once
+
 #include "TileManager.hpp"
 #include "Empire.hpp"
 

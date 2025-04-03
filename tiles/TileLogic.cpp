@@ -10,6 +10,9 @@ Empire* create_empire(int f, int p, int m, Coords coords) {
     return e;
 }
 
+TileManager* TileLogic::tm = nullptr;
+std::vector<Empire*> TileLogic::empires;
+
 TileLogic::~TileLogic() {
 
 }

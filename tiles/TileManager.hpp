@@ -1,3 +1,5 @@
+#pragma once
+
 #define ROWS 7
 #define COLS 14
 

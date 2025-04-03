@@ -1,6 +1,5 @@
 #include "Empire.hpp"
 #include <vector> 
-#
 
 Empire::~Empire() {
 
@@ -32,14 +31,11 @@ bool Empire::isEmpireGrowing() {
 }
 
 double Empire::calculateInfluence(Yields* yields) {
-    if yields
+
 }
 
 /* Function to take a Yields item and calculate influence, etc. */
 void Empire::updateEmpire(Yields* yields) {
-
-
-    struct Yields *yields = calculateYields();
 
     double inf = calculateInfluence(yields);
 

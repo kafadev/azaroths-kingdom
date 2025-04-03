@@ -203,8 +203,6 @@ void HexGrid::render(SDL_Renderer* renderer) {
     SDL_RenderPresent(renderer);
 }
 
-
-
 /* Function not in usage */
 void HexGrid::updateDisplayedTileColor(SDL_Renderer* renderer, Tile* tile) {
     drawHexagon(renderer, tile->getCoords(), tile->getColor());
@@ -257,28 +255,6 @@ void HexGrid::rippleEffect(SDL_Renderer* renderer, Tile* tile) {
         old_items.clear();
         std::swap(old_items, new_items);
     }
-
-
-
-    /* Unused Code : Loops forever through one column highlighting each item in red or blue */
-    // loop absolutely forever
-    // while (true) {
-
-
-    //     Tile* tile = tm->getTile(r, 0);
-
-    //     if (tile->checkColor(RED)) {
-    //         tile->setColor(BLUE);
-    //     } else {
-    //         tile->setColor(RED);
-    //     }
-    //     render(renderer);
-
-    //     std::this_thread::sleep_for(std::chrono::seconds(1));
-
-    //     r = (r + 1) % ROWS;
-
-    // }
 }
 
 Tile* HexGrid::getTileFromCoords(Coords coords) {
