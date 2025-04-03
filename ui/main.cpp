@@ -139,8 +139,8 @@ int main(int argc, char* argv[]) {
     // enable capturing of mouse
     SDL_CaptureMouse(SDL_TRUE);
 
-    // run loop of music
-    SDL_CreateThread(playMusic, "music", nullptr);
+    // run loop of music (DISABLED)
+    // SDL_CreateThread(playMusic, "music", nullptr);
 
     // run infinitely to check for events
     while (running) {

@@ -5,6 +5,7 @@
 #include <vector> 
 #include <functional>
 #include <cstdlib>
+#include <unordered_set>
 
 // allocate a 2d array of tiles
 TileManager::TileManager() {
@@ -216,6 +217,46 @@ std::set<Tile*> TileManager::getConnectedTiles(Tile* tile) {
     return connectedTiles;
 }
 
+/* Extension fo getConnectedTiles but in a radius r */
+/* Includes the current given tile as well. */
+std::set<Tile*> TileManager::getConnectedTilesInRadius(Tile* tile, int radius) {
+
+    std::set<Tile*> visitedTiles; 
+    std::set<Tile*> nextTiles = getConnectedTiles(tile);
+
+    std::set<Tile*> tmpTiles;
+
+    for (int r = 0; r < radius; r++) {
+        for (auto* t : nextTiles) {
+            
+            SDL_Log("Acessing Tile (%d, %d)", t->getCoords().x, t->getCoords().y);
+
+            if (visitedTiles.find(t) == visitedTiles.end()) {
+
+                // set tile t to be visited
+                SDL_Log("Tile has not been visited, adding to visited set");
+                visitedTiles.insert(t);
+
+                // run getConnectedTiles() on t
+                SDL_Log("Investigating what this tile is connected to");
+                std::set<Tile*> newTiles = getConnectedTiles(t);
+                for (auto nt: newTiles) {
+                    SDL_Log("Inserted %d into tmpTiles", nt);
+                    tmpTiles.insert(nt);
+                }
+            }
+        }
+        
+        SDL_Log("TmpTiles has %d len", tmpTiles.size());
+        nextTiles.clear();
+        std::swap(nextTiles, tmpTiles);
+        
+    }
+
+    return visitedTiles;
+    
+}
+
 /* Assumes an existing array has been constructed, tries to generate random tiles for each item. */
 void TileManager::generateRandomGrid() {
 
@@ -254,7 +295,7 @@ Tile* TileManager::getTile(int r, int c) {
 
 void TileManager::colorNearbyTiles(Tile* tile) {
 
-    std::set<Tile*> tiles = getConnectedTiles(tile);
+    std::set<Tile*> tiles = getConnectedTilesInRadius(tile, 2);
 
     for (auto t : tiles) {
         t->setColor(RED);

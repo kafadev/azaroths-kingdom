@@ -36,6 +36,7 @@ class TileManager {
         Tile *getBottomLeftItem(int r, int c);
         Tile *getBottomRightItem(int r, int c);
         std::set<Tile*> getConnectedTiles(Tile *tile);
+        std::set<Tile*> getConnectedTilesInRadius(Tile* tile, int radius);
         void generateRandomGrid();
 
         void colorNearbyTiles(Tile* tile);
