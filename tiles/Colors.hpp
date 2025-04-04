@@ -15,6 +15,10 @@ constexpr Color BLACK  { 0,   0,   0, 255 };
 constexpr Color YELLOW  { 255,   255,   0, 255 };
 
 constexpr Color BROWN  { 139, 69, 19, 255 };
+
+
+/* City/Town Colors */
 constexpr Color GRAY  { 128,   128,   128, 255 };
+constexpr Color CYAN  { 0, 255, 255, 255 };
 
 

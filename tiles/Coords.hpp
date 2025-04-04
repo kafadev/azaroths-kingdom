@@ -1,5 +1,5 @@
 #pragma once
 struct Coords {
-    int x;
-    int y;
+    int x;          // also corresponds to 'r'
+    int y;          // also correponds to 'c'
 };

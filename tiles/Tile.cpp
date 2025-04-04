@@ -8,12 +8,14 @@
 /* const map of colors to description for all tiles */
 // maybe best to later aggregate this into some config file & possibly create a utils.cpp to house this.
 static std::map<Color, std::string, ColorComparator> ColorToType = {
-    {GRAY, "Non-Fertile"},
+    {GRAY, "Town"},
     {BROWN, "Mineral-Rich"},
     {YELLOW, "Fertile"},
     {GREEN, "Wildcard"},
     {BLUE, "Ocean"},
-    {WHITE, "Tundra"}
+    {WHITE, "Tundra"},
+    {CYAN, "Capital City"},
+    {BLACK, "Non-existant"}
 };
 
 Tile::~Tile() {
