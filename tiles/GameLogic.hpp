@@ -1,15 +1,16 @@
 #pragma once
-
-#include "TileManager.hpp"
 #include "Empire.hpp"
+#include "TileManager.hpp"
 
-class TileLogic {
+class GameLogic {
     public:
-        ~TileLogic();
-        TileLogic(TileManager* tm);
+        ~GameLogic();
+        GameLogic(TileManager* tm);
+
+        Yields* calculateYields(Coords coords);
 
     private:
-        static TileManager* tm; 
         static std::vector<Empire*> empires; /* List of Empires, current naive implementation */
+        static TileManager* tm; 
 
-};
+};  

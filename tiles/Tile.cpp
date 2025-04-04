@@ -6,6 +6,7 @@
 #include "Tile.hpp"
 
 /* const map of colors to description for all tiles */
+// maybe best to later aggregate this into some config file & possibly create a utils.cpp to house this.
 static std::map<Color, std::string, ColorComparator> ColorToType = {
     {GRAY, "Non-Fertile"},
     {BROWN, "Mineral-Rich"},

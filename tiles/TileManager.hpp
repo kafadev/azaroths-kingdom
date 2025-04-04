@@ -27,6 +27,7 @@ class TileManager {
 
         // Getters
         Tile *getTile(int r, int c);
+        Tile *getTile(Coords coords);
         Tile *getTileByName(const std::string& tileName) const;
         Tile *getTopItem(int r, int c);
         Tile *getBottomItem(int r, int c);

@@ -307,6 +307,11 @@ Tile* TileManager::getTile(int r, int c) {
     return allTiles[r][c];
 }
 
+Tile* TileManager::getTile(Coords coords) {
+
+    return getTile(coords.x, coords.y);
+}
+
 void TileManager::colorNearbyTiles(Tile* tile) {
 
     std::unordered_set<Tile*>  tiles = getConnectedTilesInRadius(tile, 4);

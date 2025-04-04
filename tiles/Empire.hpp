@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "Coords.hpp"
-#include "TileManager.hpp"
+#include "GameLogic.hpp"
 
 struct Yields {
     int food;               /* Used to calculate growth */
@@ -16,7 +16,6 @@ class Empire {
         Empire(int food, int population,  int number_of_towns, int minerals);
         ~Empire();
 
-        Yields* calculateYields();
         bool isEmpireGrowing();
         double calculateInfluence(Yields* yields);
         void updateEmpire(Yields* yields);
