@@ -1,5 +1,7 @@
+#pragma once
 #include <vector>
 #include "Coords.hpp"
+#include "TileManager.hpp"
 
 struct Yields {
     int food;               /* Used to calculate growth */

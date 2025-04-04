@@ -260,18 +260,37 @@ void TileManager::generateRandomGrid() {
     for (int r = 0; r < ROWS; r++) {
         for (int c = 0; c < COLS; c++) {
 
-           float x = rand() % 100;
+           int x = (int) (rand() % 8);
+           Color color;
 
-            if (x >= 75) {
-                allTiles[r][c] = new Tile("Yellow Tile", WHITE);
+            switch (x) {
+                case 0:
+                    color = RED;
+                    break;
+                case 1:
+                    color = GREEN;
+                    break;
+                case 2:
+                    color = BLUE;
+                    break;
+                case 3:
+                    color = WHITE;
+                    break;
+                case 4:
+                    color = BLACK;
+                    break;
+                case 5:
+                    color = YELLOW;
+                    break;
+                case 6:
+                    color = BROWN;
+                    break;
+                default:
+                    color = GRAY;
+                    break;
             }
-            else if (x >= 25) {
-                allTiles[r][c] = new Tile("Green Tile", BROWN);
-            }
-            else {
-                allTiles[r][c] = new Tile("White Tile", GRAY);
-            }
-
+            
+            allTiles[r][c] = new Tile("Test Tile", color);
             allTiles[r][c]->setCoords(Coords{r, c});
             
         }

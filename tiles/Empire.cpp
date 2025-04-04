@@ -22,6 +22,8 @@ Empire::Empire(int food, int population,  int number_of_towns, int minerals) {
 
 Yields* Empire::calculateYields() {
     // std::vector -> Add tiles in 2x radius
+
+   // Tile* capitalCity = this->capitalCoords
     
     // calculate 
 }
