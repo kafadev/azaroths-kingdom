@@ -5,6 +5,8 @@
 /* Short helper functions */
 /* Short helper function to create a dummy empire */
 
+static int timestep = 0;
+
 Empire* create_empire(int f, int p, int m, Coords coords) {
 
     Empire* e = new Empire();
@@ -34,15 +36,16 @@ Yields* GameLogic::calculateYields(Coords coords) {
         std::string tileType = t->getTileType();
         
         if (tileType == "Non-Fertile") {
-            
-
+            // do nothing
         } else if (tileType == "Mineral-Rich") {
+            y->minerals += 1;
             
         } else if (tileType == "Fertile") {
-            
+            y->food += 1;
 
         } else if (tileType == "Wildcard") {
-           
+            y->food += 0.5;
+            y->minerals += 0.5;
 
         } else if (tileType == "Ocean") {
             
@@ -52,8 +55,20 @@ Yields* GameLogic::calculateYields(Coords coords) {
             
         }
     }
-
 }
+
+void GameLogic::incrementTimestep() {
+    timestep += 1;
+}
+
+void GameLogic::calculateEmpireDirection(Empire *e) {
+    Yields* y = calculateYields(e->getCapitalCoords());
+    e->updateEmpire(y);
+
+    incrementTimestep();
+}
+
+
 
 
 

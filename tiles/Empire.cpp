@@ -11,6 +11,7 @@ Empire::Empire() {
     this->population = 5;        
     this->number_of_towns = 0;
     this->minerals = 50;   
+    this->influence = 0;
 };
 
 Empire::Empire(int food, int population,  int number_of_towns, int minerals) {
@@ -21,35 +22,29 @@ Empire::Empire(int food, int population,  int number_of_towns, int minerals) {
 }
 
 bool Empire::isEmpireGrowing() {
-    
+    return this->food > this->population;
 }
 
-double Empire::calculateInfluence(Yields* yields) {
+/* Influence is determined primarily from the population values, but also some yield values */
+float Empire::calculateInfluence(Yields* yields) {
+    return yields->population + 0.75 * (yields->minerals);
+}
 
+float Empire::calculateMilitaryStrength(Yields* yields) {
+    return yields->minerals + 0.5 * yields->food;
 }
 
 /* Function to take a Yields item and calculate influence, etc. */
 void Empire::updateEmpire(Yields* yields) {
 
-    double inf = calculateInfluence(yields);
-
-
-    if (isEmpireGrowing()) {
-        expand();
-    } else {
-        shrink();
-    }
-
-
-    delete(yields);
+    this->influence += calculateInfluence(yields);
+    this->food += yields->food;
+    this->population += yields->population;
+    this->minerals += minerals;
 }
 
-/* If Empire is growing, then run expand on it */
-void Empire::expand() {
+/* Getters */
 
-}
-
-/* If Empire is not growing, shrink it */
-void Empire::shrink() {
-
-}
+Coords Empire::getCapitalCoords() {
+    return this->capitalCoords;
+};

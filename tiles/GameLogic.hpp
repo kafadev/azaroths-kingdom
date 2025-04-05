@@ -9,6 +9,11 @@ class GameLogic {
 
         Yields* calculateYields(Coords coords);
 
+
+    void incrementTimestep();
+    void calculateEmpireDirection(Empire *e);
+
+
     private:
         static std::vector<Empire*> empires; /* List of Empires, current naive implementation */
         static TileManager* tm; 

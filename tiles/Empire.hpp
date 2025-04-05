@@ -4,9 +4,9 @@
 #include "GameLogic.hpp"
 
 struct Yields {
-    int food;               /* Used to calculate growth */
-    int population;         /* Used to calculate growth */
-    int minerals;   
+    float food;               /* Used to calculate growth */
+    float population;         /* Used to calculate growth */
+    float minerals;   
 };
 
 class Empire {
@@ -17,18 +17,19 @@ class Empire {
         ~Empire();
 
         bool isEmpireGrowing();
-        double calculateInfluence(Yields* yields);
+        float calculateInfluence(Yields* yields);
         void updateEmpire(Yields* yields);
+        float calculateMilitaryStrength(Yields* yields);
 
-        void expand();
-        void shrink();
-
+        /* Getters */
+        Coords getCapitalCoords();
 
     private: 
         int food;               /* Used to calculate growth */
         int population;         /* Used to calculate growth */
         int number_of_towns;    /* Used for influence multiplier */
         int minerals;           /* Used for military strength */
+        float influence;
 
         Coords capitalCoords;
         std::vector<Coords> towns;
