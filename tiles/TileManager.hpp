@@ -12,12 +12,12 @@
 #include <unordered_set>
 #include "Tile.hpp"
 #include "utils.hpp"
-
+#include <mutex>
 
 class TileManager {
     private:
-        std::vector<std::vector<Tile*>> allTiles;  
-
+        std::vector<std::vector<Tile*>> allTiles; 
+        
     public:
         // Destructor to clean up dynamically allocated tiles
         ~TileManager();

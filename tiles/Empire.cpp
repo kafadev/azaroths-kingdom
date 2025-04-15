@@ -12,13 +12,15 @@ Empire::Empire() {
     this->number_of_towns = 0;
     this->minerals = 50;   
     this->influence = 0;
+    this->name = "Test Empire";
 };
 
-Empire::Empire(int food, int population,  int number_of_towns, int minerals) {
+Empire::Empire(int food, int population,  int number_of_towns, int minerals, std::string name) {
     this->food = food;
     this->population = population;        
     this->number_of_towns = number_of_towns;
     this->minerals = minerals;   
+    this->name = name;
 }
 
 bool Empire::isEmpireGrowing() {

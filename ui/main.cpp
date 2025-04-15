@@ -6,16 +6,22 @@
 #include <thread>
 #include <SDL2/SDL_mixer.h>
 #include "../tiles/utils.hpp"
+#include "../tiles/GameLogic.hpp"
 
 #define MUSIC false
 
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
 
+std::mutex tileManagerLock;
+
 int colorRandomTilesYellow(void* data) {
     //HexGrid* hexGrid, TileManager* tm, SDL_Renderer* renderer 
     //hexGrid->rippleEffect(renderer, tm->getTile(0, 0));
     TileManager* tm = (TileManager*) data;
+
+
+    std::lock_guard<std::mutex>guard1(tileManagerLock);
 
     for (int i = 0; i < 5; i++) {
         
@@ -78,6 +84,19 @@ int playGame(void* data) {
 
     // initialize TileManager
     TileManager* tm = (TileManager*) data;
+
+    // lock some kind of lock (doing operations on tm)
+
+    // Initialize GameLogic
+    GameLogic gl = GameLogic(tm);
+
+    // run infinitely
+    while (true) {
+        gl.calculateAllEmpiresDirection();
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    }
+
+    // unlock lock
 }
 
 int main(int argc, char* argv[]) {
@@ -133,9 +152,8 @@ int main(int argc, char* argv[]) {
     }
 
     /* Generate HexGrid */
-    /* Allocated on the STACK bc the main() function should stay in frame regardless of functions */
-    TileManager tm;
-    HexGrid hexGrid(&tm);
+    TileManager* tm = new TileManager();
+    HexGrid hexGrid(tm);
 
     bool running = true;
     SDL_Event event;
