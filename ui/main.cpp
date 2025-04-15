@@ -9,7 +9,6 @@
 
 #define MUSIC false
 
-
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
 
@@ -74,6 +73,13 @@ int playMusic(void* data) {
     return 0;
 }
 
+/* Perhaps good to change this in the future to a more appropriate name */
+int playGame(void* data) {
+
+    // initialize TileManager
+    TileManager* tm = (TileManager*) data;
+}
+
 int main(int argc, char* argv[]) {
 
     /* Set up video-related things */
@@ -104,6 +110,7 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
+    // Create SDL Window
     SDL_Window* window = SDL_CreateWindow("Hex Grid", 
                                         SDL_WINDOWPOS_CENTERED, 
                                         SDL_WINDOWPOS_CENTERED, 
@@ -126,6 +133,7 @@ int main(int argc, char* argv[]) {
     }
 
     /* Generate HexGrid */
+    /* Allocated on the STACK bc the main() function should stay in frame regardless of functions */
     TileManager tm;
     HexGrid hexGrid(&tm);
 
@@ -160,6 +168,7 @@ int main(int argc, char* argv[]) {
         // render & refresh all the time (checking for updates)
         hexGrid.render(renderer);
 
+        /* Run the thread to color nearby tiles*/
         if (event.type == SDL_KEYDOWN) {
             
             #ifdef LOGGING
@@ -167,7 +176,6 @@ int main(int argc, char* argv[]) {
             #endif 
 
             SDL_CreateThread(colorNearbyTiles, "test", &tm); // currently hardcoded to 3
-
         }
     }
 
