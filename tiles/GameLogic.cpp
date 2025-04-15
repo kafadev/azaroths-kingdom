@@ -97,11 +97,10 @@ void GameLogic::calculateEmpireDirection(Empire *e) {
     std::sample( tiles.begin(), tiles.end(), randomTile, 1, gen);
 
     // change the random tile into a town
+    randomTile->changeToTown();
 
     // increment to the next time step
     incrementTimestep();
-
-
 }
 
 

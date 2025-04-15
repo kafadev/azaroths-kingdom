@@ -7,6 +7,9 @@
 #include <SDL2/SDL_mixer.h>
 #include "utils.hpp"
 
+#define MUSIC false
+
+
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
 
@@ -145,7 +148,9 @@ int main(int argc, char* argv[]) {
     SDL_CaptureMouse(SDL_TRUE);
 
     // run loop of music (DISABLED)
-    // SDL_CreateThread(playMusic, "music", nullptr);
+    #ifdef MUSIC 
+    SDL_CreateThread(playMusic, "music", nullptr);
+    #endif
 
     // run infinitely to check for events
     while (running) {
@@ -164,7 +169,7 @@ int main(int argc, char* argv[]) {
             #ifdef LOGGING
             SDL_Log("Thread Activated");
             #endif 
-            
+
             SDL_CreateThread(colorNearbyTiles, "test", &tm); // currently hardcoded to 3
 
         }
