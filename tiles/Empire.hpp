@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
+#include <string>
 #include "Coords.hpp"
-#include "GameLogic.hpp"
 #include "utils.hpp"
 
 struct Yields {

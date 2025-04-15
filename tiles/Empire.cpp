@@ -57,16 +57,16 @@ Coords Empire::getCapitalCoords() {
 };
 
 void Empire::printEmpire() {
-    printf("""============\n"
-            "%s\n",
-            "Food: %d\n",
-            "Minerals: %d\n",
-            "Influence: %f\n",
-            "Population: %d\n",
-            "Number of Towns: %d\n",
-            "Capital Coords: (%d, %d)\n",
+    printf("============\n"
+            "Name: %s\n"
+            "Food: %d\n"
+            "Minerals: %d\n"
+            "Influence: %f\n"
+            "Population: %dn"
+            "Number of Towns: %d\n"
+            "Capital Coords: (%d, %d)\n"
             "============\n",
-            this->name, 
+            this->name.c_str(), 
             this->food, 
             this->minerals, 
             this->influence, 

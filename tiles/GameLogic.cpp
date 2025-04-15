@@ -1,6 +1,6 @@
 #include "GameLogic.hpp"
-
 #include <random>
+#include <cassert> 
 
 #define YIELD_RADIUS 2 
 
@@ -65,7 +65,7 @@ Yields* GameLogic::calculateYields(std::unordered_set<Tile*> tiles) {
 void GameLogic::incrementTimestep() {
     timestep += 1;
 
-    #ifdef LOGGING 
+    #ifdef LOGGIN#include <string>G 
     printf("Current Timestep: %d\n", timestep);
     #endif
 }
@@ -76,8 +76,10 @@ void GameLogic::printYields(Yields* y) {
 
 void GameLogic::calculateEmpireDirection(Empire *e) {
 
-    // get all tiles in the radius of the capital (no support for towns yet)
+    // get all tiles in a pre-defined radius of the capital (no support for towns yet)
     std::unordered_set<Tile*> tiles = tm->getConnectedTilesInRadius(tm->getTile(e->getCapitalCoords()), YIELD_RADIUS);
+
+    assert(!tiles.empty()); // checker to make sure the getConnectedTiles function actually worked
 
     // calculate yields from the given tiles 
     Yields* y = calculateYields(tiles);
@@ -93,12 +95,15 @@ void GameLogic::calculateEmpireDirection(Empire *e) {
              we use a random number as a seed to generate another random number,
              this ensures that each run is different and non-deterministic */
     std::mt19937 gen( std::random_device{}() );
-    Tile* randomTile;
-    std::sample( tiles.begin(), tiles.end(), randomTile, 1, gen);
+    std::vector<Tile*> sampledTiles;
+    int numberOfTiles = 1; // HARDCODED!  
+    std::sample( tiles.begin(), tiles.end(), std::back_inserter(sampledTiles), numberOfTiles, gen);
 
     // change the random tile into a town
-    randomTile->changeToTown();
-
+    for (auto t : sampledTiles) {
+        t->changeToTown();
+    }
+    
     // increment to the next time step
     incrementTimestep();
 }

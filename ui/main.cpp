@@ -5,7 +5,7 @@
 #include <memory>
 #include <thread>
 #include <SDL2/SDL_mixer.h>
-#include "utils.hpp"
+#include "../tiles/utils.hpp"
 
 #define MUSIC false
 
@@ -78,31 +78,27 @@ int main(int argc, char* argv[]) {
 
     /* Set up video-related things */
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        std::string error = std::string("SDL_Init(SDL_INIT_VIDEO) failed");
-        SDL_LogCritical(0, error.c_str());
+        SDL_LogCritical(0, "SDL_Init(SDL_INIT_VIDEO) failed");
         SDL_Quit();
         return -1;
     }
 
     /* Set up audio-related SDL items */
     if (SDL_Init(SDL_INIT_AUDIO) < 0) {
-        std::string error = std::string("SDL_Init(SDL_INIT_AUDIO) failed");
-        SDL_LogCritical(0, error.c_str());
+        SDL_LogCritical(0, "SDL_Init(SDL_INIT_AUDIO) failed");
         SDL_Quit();
         return -1;
     }
 
     if (Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG) == 0) {
-        std::string error = std::string("Mix_Init failed: ") + Mix_GetError();
-        SDL_LogCritical(0, error.c_str());
+        SDL_LogCritical(0, "Mix_Init failed: %s", Mix_GetError());
         SDL_Quit();
         return -1;
     }
 
     // Open audio device
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-        std::string error = std::string("Mix_Init failed: ") + Mix_GetError();
-        SDL_LogCritical(0, error.c_str());
+        SDL_LogCritical(0, "Mix_Init failed: %s", Mix_GetError());
         Mix_Quit(); // done here because the last if statement initialized this
         SDL_Quit();
         return -1;
