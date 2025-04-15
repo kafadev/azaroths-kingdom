@@ -6,6 +6,11 @@ This is a work-in-progress game intended to be a pseudo-civilization 6 clone.
 ### Proposed Ruleset
 In this game, civilizations compete for minerals, food, and influence. There is one moveable character who can influence what tiles will turn into. He can move once each timestep. Each timestep, neighboring tiles will either improve or decay, creating farms, mines, or towns, or falling into disarray. Once a town is created, it can only shrink via food loss or if the bureaucrat removes it. Each variant of the tile results in different yields to the Empire, which in turn affects resource acquisition, influence, and other factors. 
 
+### Immediate necessities (good beginner issues) 
+- Create a class system with Tiles -> Tiles into CapitalCity Tile, Mineral Tile, etc. (HIGH) 
+- Create textures for tiles instead of using COLORS (LOW) 
+- Write logic to calculate food, minerals, population, etc from tiles surrounding a town / capital 
+
 ### Other notes
 Winning conditions are a work-in-progress. I want to get a strong working prototype before other resources / complicated game logic is introduced. Trade routes / diplomacy and other factors are interesting to model and will come in the future. 
 

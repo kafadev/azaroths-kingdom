@@ -1,15 +1,21 @@
 #pragma once
-
-#include "TileManager.hpp"
 #include "Empire.hpp"
+#include "TileManager.hpp"
+#include "utils.hpp"
 
-class TileLogic {
+class GameLogic {
     public:
-        ~TileLogic();
-        TileLogic(TileManager* tm);
+        ~GameLogic();
+        GameLogic(TileManager* tm);
+
+        Yields* calculateYields(std::unordered_set<Tile*> tiles);
+        void printYields(Yields* y);
+        void incrementTimestep();
+        void calculateEmpireDirection(Empire *e);
+
 
     private:
-        static TileManager* tm; 
         static std::vector<Empire*> empires; /* List of Empires, current naive implementation */
+        static TileManager* tm; 
 
-};
+};  
