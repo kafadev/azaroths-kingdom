@@ -7,6 +7,7 @@
 
 /* const map of colors to description for all tiles */
 // maybe best to later aggregate this into some config file & possibly create a utils.cpp to house this.
+/* Also best to possibly refactor into multiple Tile.cpp specific classes w/ inheritance. */
 static std::map<Color, std::string, ColorComparator> ColorToType = {
     {GRAY, "Town"},
     {BROWN, "Mineral-Rich"},
@@ -58,4 +59,8 @@ bool Tile::checkColor(Color color) {
 
 std::string Tile::getTileType() {
     return ColorToType[this->color];
+}
+
+void Tile::changeToTown() {
+    this->color = GRAY;
 }

@@ -36,6 +36,10 @@ class Tile {
         void setColor(Color color);
         bool checkColor(Color color);
 
+        /* Prototype Functions (to be deprecated later) */
+        void changeToTown();
+        
+
     private:
         std::string name;
         Coords coords;

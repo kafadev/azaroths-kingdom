@@ -2,6 +2,7 @@
 #include <vector>
 #include "Coords.hpp"
 #include "GameLogic.hpp"
+#include "utils.hpp"
 
 struct Yields {
     float food;               /* Used to calculate growth */
@@ -23,6 +24,7 @@ class Empire {
 
         /* Getters */
         Coords getCapitalCoords();
+        void printEmpire();
 
     private: 
         int food;               /* Used to calculate growth */
@@ -30,6 +32,7 @@ class Empire {
         int number_of_towns;    /* Used for influence multiplier */
         int minerals;           /* Used for military strength */
         float influence;
+        std::string name;
 
         Coords capitalCoords;
         std::vector<Coords> towns;

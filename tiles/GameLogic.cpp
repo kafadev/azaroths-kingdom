@@ -1,5 +1,7 @@
 #include "GameLogic.hpp"
 
+#include <random>
+
 #define YIELD_RADIUS 2 
 
 /* Short helper functions */
@@ -7,29 +9,23 @@
 
 static int timestep = 0;
 
-Empire* create_empire(int f, int p, int m, Coords coords) {
-
-    Empire* e = new Empire();
-
-    return e;
-}
-
+/* Defintions of some static items */
 TileManager* GameLogic::tm = nullptr;
 std::vector<Empire*> GameLogic::empires;
 
+/* Main GameLogic Functions */
 GameLogic::~GameLogic() {
 
 }
 
 GameLogic::GameLogic(TileManager* tm) {
     this->tm = tm;
-    Empire* e = create_empire(100, 100, 100, Coords{0, 0});
+    Empire* e = new Empire();
     this->empires.push_back(e);
 }
 
 /* Allocates a Yields struct from a coordinate */
-Yields* GameLogic::calculateYields(Coords coords) {
-    std::unordered_set<Tile*> tiles = tm->getConnectedTilesInRadius(tm->getTile(coords), YIELD_RADIUS);
+Yields* GameLogic::calculateYields(std::unordered_set<Tile*> tiles) {
     Yields* y = new Yields;
 
     for (auto t : tiles) {
@@ -48,25 +44,67 @@ Yields* GameLogic::calculateYields(Coords coords) {
             y->minerals += 0.5;
 
         } else if (tileType == "Ocean") {
-            
+            y->food += 1.0;
+
         } else if (tileType == "Tundra") {
+            y->food += 0.25;
+            y->minerals += 0.25;
             
         } else {
-            
+            // do nothing here
         }
     }
+
+    #ifdef LOGGING
+    printYields(y);
+    #endif
+
+    return y;
 }
 
 void GameLogic::incrementTimestep() {
     timestep += 1;
+
+    #ifdef LOGGING 
+    printf("Current Timestep: %d\n", timestep);
+    #endif
+}
+
+void GameLogic::printYields(Yields* y) {
+    printf("Food: %d, Population: %d, Minerals: %d", y->food, y->population, y->minerals);
 }
 
 void GameLogic::calculateEmpireDirection(Empire *e) {
-    Yields* y = calculateYields(e->getCapitalCoords());
-    e->updateEmpire(y);
 
+    // get all tiles in the radius of the capital (no support for towns yet)
+    std::unordered_set<Tile*> tiles = tm->getConnectedTilesInRadius(tm->getTile(e->getCapitalCoords()), YIELD_RADIUS);
+
+    // calculate yields from the given tiles 
+    Yields* y = calculateYields(tiles);
+    
+    e->updateEmpire(y); // update all the empire's values
+
+    // change RANDOM tile to be a TOWN
+    /* reference: https://www.reddit.com/r/cpp_questions/comments/r6fqsb/deleted_by_user/*/
+    /* https://stackoverflow.com/questions/39288595/why-not-just-use-stdrandom-device*/
+
+    /* Note: mt19937 (Mersenne Twister algorithm) is used here as an 
+             efficient number generator, std::random_device provides a random number too
+             we use a random number as a seed to generate another random number,
+             this ensures that each run is different and non-deterministic */
+    std::mt19937 gen( std::random_device{}() );
+    Tile* randomTile;
+    std::sample( tiles.begin(), tiles.end(), randomTile, 1, gen);
+
+    // change the random tile into a town
+
+    // increment to the next time step
     incrementTimestep();
+
+
 }
+
+
 
 
 

@@ -193,7 +193,9 @@ std::unordered_set<Tile*> TileManager::getConnectedTiles(Tile* tile) {
 
     bool use_reverse = (tileCol % 2 == 0);
 
+    #ifdef LOGGING
     SDL_Log("Getting Coords for tile at (%d, %d)", tileRow, tileCol);
+    #endif
 
     // use the reverse pattern
     if (use_reverse) {

@@ -41,6 +41,13 @@ void Empire::updateEmpire(Yields* yields) {
     this->food += yields->food;
     this->population += yields->population;
     this->minerals += minerals;
+ 
+    #ifdef LOGGING
+    printEmpire();
+
+    #endif
+
+
 }
 
 /* Getters */
@@ -48,3 +55,23 @@ void Empire::updateEmpire(Yields* yields) {
 Coords Empire::getCapitalCoords() {
     return this->capitalCoords;
 };
+
+void Empire::printEmpire() {
+    printf("""============\n"
+            "%s\n",
+            "Food: %d\n",
+            "Minerals: %d\n",
+            "Influence: %f\n",
+            "Population: %d\n",
+            "Number of Towns: %d\n",
+            "Capital Coords: (%d, %d)\n",
+            "============\n",
+            this->name, 
+            this->food, 
+            this->minerals, 
+            this->influence, 
+            this->population, 
+            this->number_of_towns, 
+            getCapitalCoords().x, 
+            getCapitalCoords().y);
+}
