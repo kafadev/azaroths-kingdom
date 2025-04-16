@@ -55,6 +55,9 @@ Yields* GameLogic::calculateYields(std::unordered_set<Tile*> tiles) {
             y->food += 0.25;
             y->minerals += 0.25;
             
+        } else if (tileType == "Town") {
+            y->population += 1;
+
         } else {
             // do nothing here
         }
@@ -91,7 +94,7 @@ void GameLogic::calculateEmpireDirection(Empire *e) {
     
     e->updateEmpire(y); // update all the empire's values
 
-    // change RANDOM tile to be a TOWN
+    // change RANDOM tile to be a TOWN -> URBAN SPRAWL
     /* reference: https://www.reddit.com/r/cpp_questions/comments/r6fqsb/deleted_by_user/*/
     /* https://stackoverflow.com/questions/39288595/why-not-just-use-stdrandom-device*/
 
@@ -104,13 +107,14 @@ void GameLogic::calculateEmpireDirection(Empire *e) {
     int numberOfTiles = 1; // HARDCODED!  
     std::sample( tiles.begin(), tiles.end(), std::back_inserter(sampledTiles), numberOfTiles, gen);
 
-    // change the random tile into a town
-    for (auto t : sampledTiles) {
-        t->changeToTown();
+    // change the random tile into a town (if expanding)
+    if (e->isEmpireGrowing()) {
+        for (auto t : sampledTiles) {
+            t->changeToTown();
+        }
+    } else {
+        // currently do nothing. stagnate. 
     }
-    
-    // increment to the next time step
-    incrementTimestep();
 }
 
 void GameLogic::calculateAllEmpiresDirection() {
@@ -133,6 +137,9 @@ void GameLogic::calculateAllEmpiresDirection() {
         e->printEmpire();
         #endif
     }
+
+    // increment to the next time step
+    incrementTimestep();
 }
 
 

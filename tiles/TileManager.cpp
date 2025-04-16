@@ -300,7 +300,7 @@ void TileManager::generateRandomGrid() {
                     color = BROWN;
                     break;
                 default:
-                    color = GRAY;
+                    color = BROWN;
                     break;
             }
             
@@ -309,6 +309,10 @@ void TileManager::generateRandomGrid() {
             
         }
     }
+
+    #if EMPIRE_TEST
+    allTiles[3][3]->setColor(CYAN);
+    #endif
 }
 
 Tile* TileManager::getTile(int r, int c) {

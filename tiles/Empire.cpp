@@ -13,6 +13,7 @@ Empire::Empire() {
     this->number_of_towns = 0;
     this->minerals = 50;   
     this->influence = 0;
+    this->capitalCoords = Coords{3,3};
     this->name = "Test Empire";
 };
 
@@ -41,9 +42,9 @@ float Empire::calculateMilitaryStrength(Yields* yields) {
 void Empire::updateEmpire(Yields* yields) {
 
     this->influence += calculateInfluence(yields);
-    this->food += yields->food;
+    this->food += (yields->food - this->population);
     this->population += yields->population;
-    this->minerals += minerals;
+    this->minerals += yields->minerals;
  
     #if LOGGING
     printEmpire();

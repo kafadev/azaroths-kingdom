@@ -87,10 +87,14 @@ int playGame(void* data) {
     GameLogic gl = GameLogic(tm);
 
     // run infinitely
-    while (true) {
+    int x = 10;
+    while (x != 0) {
         gl.calculateAllEmpiresDirection();
-        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        x--;
     }
+
+    return 0;
 
     // unlock lock
 }
