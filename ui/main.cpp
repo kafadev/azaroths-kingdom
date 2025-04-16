@@ -81,7 +81,7 @@ int playGame(void* data) {
     // initialize TileManager
     TileManager* tm = (TileManager*) data;
 
-    // lock some kind of lock (doing operations on tm)
+    // lock some kind of lock (doing operations on tm) ;; for now not a problem since only one thread manipulates it. 
 
     // Initialize GameLogic
     GameLogic gl = GameLogic(tm);
@@ -187,7 +187,7 @@ int main(int argc, char* argv[]) {
             SDL_Log("Thread Activated");
             #endif 
 
-            SDL_CreateThread(colorNearbyTiles, "test", &tm); // currently hardcoded to 3
+            SDL_CreateThread(playGame, "test", &tm); // currently hardcoded to 3
 
         }
     }

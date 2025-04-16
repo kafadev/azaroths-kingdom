@@ -76,7 +76,7 @@ void GameLogic::incrementTimestep() {
 }
 
 void GameLogic::printYields(Yields* y) {
-    SDL_Log("Food: %d, Population: %d, Minerals: %d", y->food, y->population, y->minerals);
+    SDL_Log("Food: %f, Population: %f, Minerals: %f", y->food, y->population, y->minerals);
 }
 
 void GameLogic::calculateEmpireDirection(Empire *e) {

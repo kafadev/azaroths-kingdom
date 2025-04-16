@@ -16,7 +16,7 @@ Empire::Empire() {
     this->name = "Test Empire";
 };
 
-Empire::Empire(int food, int population,  int number_of_towns, int minerals, std::string name) {
+Empire::Empire(float food, float population,  int number_of_towns, float minerals, std::string name) {
     this->food = food;
     this->population = population;        
     this->number_of_towns = number_of_towns;
@@ -62,10 +62,10 @@ Coords Empire::getCapitalCoords() {
 void Empire::printEmpire() {
     SDL_Log("============\n"
             "Name: %s\n"
-            "Food: %d\n"
-            "Minerals: %d\n"
+            "Food: %f\n"
+            "Minerals: %f\n"
             "Influence: %f\n"
-            "Population: %dn"
+            "Population: %fn"
             "Number of Towns: %d\n"
             "Capital Coords: (%d, %d)\n"
             "============\n",
