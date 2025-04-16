@@ -1,5 +1,6 @@
 #include "Empire.hpp"
 #include <vector> 
+#include "SDL2/SDL.h"
 
 Empire::~Empire() {
 
@@ -59,7 +60,7 @@ Coords Empire::getCapitalCoords() {
 };
 
 void Empire::printEmpire() {
-    printf("============\n"
+    SDL_Log("============\n"
             "Name: %s\n"
             "Food: %d\n"
             "Minerals: %d\n"

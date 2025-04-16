@@ -187,6 +187,9 @@ void push_back_non_null(Tile* foundTile, std::unordered_set<Tile*>* tiles) {
 */
 std::unordered_set<Tile*> TileManager::getConnectedTiles(Tile* tile) {
 
+    SDL_Log("Started getConnectedTiles function");
+    assert(tile);
+
     std::unordered_set<Tile*> connectedTiles;
     int tileRow = tile->getCoords().x;
     int tileCol = tile->getCoords().y; 
@@ -224,6 +227,8 @@ std::unordered_set<Tile*> TileManager::getConnectedTilesInRadius(Tile* tile, int
     std::unordered_set<Tile*> visitedTiles = {}; 
     std::unordered_set<Tile*> nextTiles = getConnectedTiles(tile);
     std::unordered_set<Tile*> tmpTiles;
+
+    SDL_Log("started function");
 
     for (int r = 0; r < radius; r++) {
         for (auto* t : nextTiles) {
@@ -316,6 +321,9 @@ Tile* TileManager::getTile(Coords coords) {
 
 void TileManager::colorNearbyTiles(Tile* tile) {
 
+    assert(tile);
+
+    SDL_Log("Running getConnectedTiles function");
     std::unordered_set<Tile*>  tiles = getConnectedTilesInRadius(tile, 4);
 
     for (auto t : tiles) {

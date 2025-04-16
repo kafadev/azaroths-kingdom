@@ -48,6 +48,8 @@ int colorRandomTilesYellow(void* data) {
 
 int colorNearbyTiles(void* data) {
     TileManager* tm = (TileManager*) data;
+
+    SDL_Log("ColorNearbyTiles begun");
     // std::set<Tile*> tiles = tm->getConnectedTiles(tm->getTile(3,3));
 
     // for (auto t : tiles) {

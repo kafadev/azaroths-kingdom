@@ -71,12 +71,12 @@ void GameLogic::incrementTimestep() {
     timestep += 1;
 
     #ifdef LOGGING
-    printf("Current Timestep: %d\n", timestep);
+    SDL_Log("Current Timestep: %d\n", timestep);
     #endif
 }
 
 void GameLogic::printYields(Yields* y) {
-    printf("Food: %d, Population: %d, Minerals: %d", y->food, y->population, y->minerals);
+    SDL_Log("Food: %d, Population: %d, Minerals: %d", y->food, y->population, y->minerals);
 }
 
 void GameLogic::calculateEmpireDirection(Empire *e) {
@@ -122,14 +122,14 @@ void GameLogic::calculateAllEmpiresDirection() {
 
         // calculate direction of each empire.
         #ifdef LOGGING
-        printf("Before:");
+        SDL_Log("Before:");
         e->printEmpire();
         #endif
         
         calculateEmpireDirection(e);
 
         #ifdef LOGGING
-        printf("After:");
+        SDL_Log("After:");
         e->printEmpire();
         #endif
     }

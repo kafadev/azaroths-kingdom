@@ -43,7 +43,7 @@ Coords Tile::getCoords() {
 
 /* Public Setters */
 void Tile::setCoords(Coords newCoords) {
-    this->coords = newCoords;
+    this->coords = Coords{newCoords.x, newCoords.y};
 };
 
 void Tile::setColor(Color color) {
