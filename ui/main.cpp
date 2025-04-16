@@ -26,13 +26,13 @@ int colorRandomTilesYellow(void* data) {
         float r = rand() % ROWS;
         float c = rand() % COLS;
 
-        #ifdef LOGGING
+        #if LOGGING
         SDL_Log(tm->getTile(r,c)->getTileType().c_str());
         #endif
     
         tm->getTile(r, c)->setColor(YELLOW);
 
-        #ifdef LOGGING
+        #if LOGGING
         SDL_Log(tm->getTile(r,c)->getTileType().c_str());
         #endif 
     }
@@ -165,7 +165,7 @@ int main(int argc, char* argv[]) {
     SDL_CaptureMouse(SDL_TRUE);
 
     // run loop of music (DISABLED)
-    #ifdef MUSIC 
+    #if MUSIC 
     SDL_CreateThread(playMusic, "music", nullptr);
     #endif
 
@@ -183,7 +183,7 @@ int main(int argc, char* argv[]) {
 
         if (event.type == SDL_KEYDOWN) {
             
-            #ifdef LOGGING
+            #if LOGGING
             SDL_Log("Thread Activated");
             #endif 
 

@@ -60,7 +60,7 @@ Yields* GameLogic::calculateYields(std::unordered_set<Tile*> tiles) {
         }
     }
 
-    #ifdef LOGGING
+    #if LOGGING
     printYields(y);
     #endif
 
@@ -70,7 +70,7 @@ Yields* GameLogic::calculateYields(std::unordered_set<Tile*> tiles) {
 void GameLogic::incrementTimestep() {
     timestep += 1;
 
-    #ifdef LOGGING
+    #if LOGGING
     SDL_Log("Current Timestep: %d\n", timestep);
     #endif
 }
@@ -121,14 +121,14 @@ void GameLogic::calculateAllEmpiresDirection() {
         assert(e);
 
         // calculate direction of each empire.
-        #ifdef LOGGING
+        #if LOGGING
         SDL_Log("Before:");
         e->printEmpire();
         #endif
         
         calculateEmpireDirection(e);
 
-        #ifdef LOGGING
+        #if LOGGING
         SDL_Log("After:");
         e->printEmpire();
         #endif

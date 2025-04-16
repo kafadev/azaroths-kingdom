@@ -45,7 +45,7 @@ void Empire::updateEmpire(Yields* yields) {
     this->population += yields->population;
     this->minerals += minerals;
  
-    #ifdef LOGGING
+    #if LOGGING
     printEmpire();
 
     #endif
@@ -65,7 +65,7 @@ void Empire::printEmpire() {
             "Food: %f\n"
             "Minerals: %f\n"
             "Influence: %f\n"
-            "Population: %fn"
+            "Population: %f\n"
             "Number of Towns: %d\n"
             "Capital Coords: (%d, %d)\n"
             "============\n",

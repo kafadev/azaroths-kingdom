@@ -5,6 +5,8 @@
 #include <vector>
 #include "Tile.hpp"
 
+#define TILE_LOGGING false
+
 /* const map of colors to description for all tiles */
 // maybe best to later aggregate this into some config file & possibly create a utils.cpp to house this.
 /* Also best to possibly refactor into multiple Tile.cpp specific classes w/ inheritance. */
