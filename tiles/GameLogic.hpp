@@ -12,10 +12,11 @@ class GameLogic {
         void printYields(Yields* y);
         void incrementTimestep();
         void calculateEmpireDirection(Empire *e);
+        void calculateAllEmpiresDirection();
 
 
     private:
-        static std::vector<Empire*> empires; /* List of Empires, current naive implementation */
+        //static std::vector<Empire*> empires; /* List of Empires, current naive implementation */
         static TileManager* tm; 
 
 };  

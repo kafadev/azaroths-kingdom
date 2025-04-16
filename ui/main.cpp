@@ -6,6 +6,7 @@
 #include <thread>
 #include <SDL2/SDL_mixer.h>
 #include "../tiles/utils.hpp"
+#include "../tiles/GameLogic.hpp"
 
 #define MUSIC false
 
@@ -72,6 +73,26 @@ int playMusic(void* data) {
     }
 
     return 0;
+}
+
+/* Perhaps good to change this in the future to a more appropriate name */
+int playGame(void* data) {
+
+    // initialize TileManager
+    TileManager* tm = (TileManager*) data;
+
+    // lock some kind of lock (doing operations on tm)
+
+    // Initialize GameLogic
+    GameLogic gl = GameLogic(tm);
+
+    // run infinitely
+    while (true) {
+        gl.calculateAllEmpiresDirection();
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    }
+
+    // unlock lock
 }
 
 int main(int argc, char* argv[]) {

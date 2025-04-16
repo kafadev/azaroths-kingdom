@@ -11,7 +11,7 @@ static int timestep = 0;
 
 /* Defintions of some static items */
 TileManager* GameLogic::tm = nullptr;
-std::vector<Empire*> GameLogic::empires;
+static std::vector<Empire*> empires;
 
 /* Main GameLogic Functions */
 GameLogic::~GameLogic() {
@@ -19,9 +19,14 @@ GameLogic::~GameLogic() {
 }
 
 GameLogic::GameLogic(TileManager* tm) {
+
+    assert(tm); // make sure tm is not nullptr
+
     this->tm = tm;
+
+    /* Move this code later on */
     Empire* e = new Empire();
-    this->empires.push_back(e);
+    empires.push_back(e);
 }
 
 /* Allocates a Yields struct from a coordinate */
@@ -65,13 +70,13 @@ Yields* GameLogic::calculateYields(std::unordered_set<Tile*> tiles) {
 void GameLogic::incrementTimestep() {
     timestep += 1;
 
-    #ifdef LOGGIN#include <string>G 
-    printf("Current Timestep: %d\n", timestep);
+    #ifdef LOGGING
+    SDL_Log("Current Timestep: %d\n", timestep);
     #endif
 }
 
 void GameLogic::printYields(Yields* y) {
-    printf("Food: %d, Population: %d, Minerals: %d", y->food, y->population, y->minerals);
+    SDL_Log("Food: %d, Population: %d, Minerals: %d", y->food, y->population, y->minerals);
 }
 
 void GameLogic::calculateEmpireDirection(Empire *e) {
@@ -108,6 +113,27 @@ void GameLogic::calculateEmpireDirection(Empire *e) {
     incrementTimestep();
 }
 
+void GameLogic::calculateAllEmpiresDirection() {
+
+    for (auto e : empires) {
+
+        // make sure empire is VALID
+        assert(e);
+
+        // calculate direction of each empire.
+        #ifdef LOGGING
+        SDL_Log("Before:");
+        e->printEmpire();
+        #endif
+        
+        calculateEmpireDirection(e);
+
+        #ifdef LOGGING
+        SDL_Log("After:");
+        e->printEmpire();
+        #endif
+    }
+}
 
 
 
