@@ -4,11 +4,7 @@
 #include "Coords.hpp"
 #include "utils.hpp"
 
-struct Yields {
-    float food;               /* Used to calculate growth */
-    float population;         /* Used to calculate growth */
-    float minerals;   
-};
+
 
 class Empire {
 

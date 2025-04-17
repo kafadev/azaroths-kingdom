@@ -10,3 +10,11 @@
 
 /* Phase 1 testing */
 #define EMPIRE_TEST true
+
+
+/* Universally used yields struct to collect information from tiles */
+struct Yields {
+    float food;               /* Used to calculate growth */
+    float population;         /* Used to calculate growth */
+    float minerals;   
+};
