@@ -4,7 +4,8 @@ LDFLAGS := -lSDL2 -lSDL2_mixer
 
 SRC := \
     $(wildcard ui/*.cpp) \
-    $(wildcard tiles/*.cpp)
+    $(wildcard tiles/*.cpp) \
+	$(wildcard tiles/tile_types/*.cpp)
 
 OBJ := $(SRC:.cpp=.o)
 
