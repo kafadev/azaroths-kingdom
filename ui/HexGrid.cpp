@@ -223,8 +223,6 @@ void HexGrid::rippleEffect(SDL_Renderer* renderer, Tile* tile) {
     std::unordered_set<std::pair<int, int>, pair_hash> old_items = {std::make_pair(tile->getCoords().x, tile->getCoords().y)};
     std::unordered_set<std::pair<int, int>, pair_hash> new_items = {};
 
-    const int ITERATIONS = 5;
-
     for (int i = 0; i < ITERATIONS; i++) {
         // get all new items
         for (auto item : old_items) {
