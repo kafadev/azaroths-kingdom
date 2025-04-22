@@ -31,6 +31,10 @@ Winning conditions are a work-in-progress. I want to get a strong working protot
 ### Example Map (Randomized, Apr 2025)
 ![image](https://github.com/user-attachments/assets/540c0799-3ae6-4e06-9d31-45e39ba3aaab)
 
+### Example Example of Growth & Shrinking (Randomized, Apr 2025)
+[Screencast from 2025-04-21 17-24-17.webm](https://github.com/user-attachments/assets/bd1a0069-386f-40b7-b32b-2c7b34baf734)
+
+
 ### Possible rendering issues
 - firstly, make sure SDL2 is installed
 - SDL2 might have rendering problem depending on Wayland / Xorg usage. See if switching between these helps.
