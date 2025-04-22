@@ -111,7 +111,9 @@ void GameLogic::calculateEmpireDirection(Empire *e) {
     // change the random tile into a town (if expanding)
     if (e->isEmpireGrowing()) {
         for (auto t : sampledTiles) {
-            t->changeToTown();
+            if (t->isValid()) {
+                t->changeToTown();
+            }  
         }
     } else {
         for (auto t : sampledTiles) {

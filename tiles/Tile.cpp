@@ -69,3 +69,16 @@ void Tile::changeToTown() {
 void Tile::regressTileColor() {
     this->color = originalColor;
 }
+
+bool Tile::isOceanTile() {
+    ColorComparator cmp; 
+    return cmp(this->color, BLUE);
+}
+bool Tile::isVoidTile() {
+    ColorComparator cmp;
+    return cmp(this->color, BLACK);
+}
+
+bool Tile::isValid() {
+    return !(this->isVoidTile() || this->isOceanTile());
+}

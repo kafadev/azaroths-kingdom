@@ -33,6 +33,9 @@ class Tile {
         /* Prototype Functions (to be deprecated later) */
         void changeToTown();
         void regressTileColor();
+        bool isOceanTile();
+        bool isVoidTile();
+        bool isValid();
         
 
     private:
