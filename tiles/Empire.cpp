@@ -9,19 +9,22 @@ Empire::~Empire() {
 // Default constructor -- populate default values
 Empire::Empire() {
     this->food = 50;
-    this->population = 5;        
+    this->population = 5;    
+    this->capitalPopulation = STARTING_CAPITAL_POPULATION;    
     this->number_of_towns = 0;
     this->minerals = 50;   
     this->influence = 0;
+    this->capitalCoords = Coords{3,3};
     this->name = "Test Empire";
 };
 
-Empire::Empire(int food, int population,  int number_of_towns, int minerals, std::string name) {
+Empire::Empire(float food, float population,  int number_of_towns, float minerals, std::string name) {
     this->food = food;
     this->population = population;        
     this->number_of_towns = number_of_towns;
     this->minerals = minerals;   
     this->name = name;
+    this->capitalPopulation = STARTING_CAPITAL_POPULATION;   
 }
 
 bool Empire::isEmpireGrowing() {
@@ -41,15 +44,17 @@ float Empire::calculateMilitaryStrength(Yields* yields) {
 void Empire::updateEmpire(Yields* yields) {
 
     this->influence += calculateInfluence(yields);
-    this->food += yields->food;
-    this->population += yields->population;
-    this->minerals += minerals;
- 
-    #ifdef LOGGING
-    printEmpire();
+    this->food += (yields->food - this->population);
+    this->population = yields->population + this->capitalPopulation;
+    this->minerals += yields->minerals;
 
+    #if DISABLE_NEGATIVE_FOOD
+    if (this->food < 0) {this->food = 0;}
     #endif
-
+ 
+    #if LOGGING
+    printEmpire();
+    #endif
 
 }
 
@@ -62,10 +67,10 @@ Coords Empire::getCapitalCoords() {
 void Empire::printEmpire() {
     SDL_Log("============\n"
             "Name: %s\n"
-            "Food: %d\n"
-            "Minerals: %d\n"
+            "Food: %f\n"
+            "Minerals: %f\n"
             "Influence: %f\n"
-            "Population: %dn"
+            "Population: %f\n"
             "Number of Towns: %d\n"
             "Capital Coords: (%d, %d)\n"
             "============\n",

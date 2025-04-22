@@ -8,14 +8,8 @@
 #include <vector>     // If needed, for STL containers (e.g., std::vector)
 #include "Colors.hpp"
 #include <map>
+#include "utils.hpp"
 #include "Coords.hpp"
-
-/* Generated Comparator for Color Struct */
-struct ColorComparator {
-    bool operator()(const Color& lhs, const Color& rhs) const {
-        return std::tie(lhs.r, lhs.g, lhs.b, lhs.a) < std::tie(rhs.r, rhs.g, rhs.b, rhs.a);
-    }
-};
 
 class Tile {
     public:
@@ -38,10 +32,17 @@ class Tile {
 
         /* Prototype Functions (to be deprecated later) */
         void changeToTown();
+        void regressTileColor();
+        bool isOceanTile();
+        bool isVoidTile();
+        bool isValid();
         
 
     private:
         std::string name;
         Coords coords;
         Color color;
+        Color originalColor; 
+
+        Yields resources; /* To be custom-set in each inheriting class */
 };

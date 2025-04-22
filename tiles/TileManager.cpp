@@ -171,6 +171,9 @@ Tile* TileManager::getBottomRightItem(int r, int c) {
 
 // helper function to push back
 void push_back_non_null(Tile* foundTile, std::unordered_set<Tile*>* tiles) {
+
+    assert(tiles); // ensure that the tiles unordered set is actually valid 
+
     if (foundTile) {
         tiles->insert(foundTile);
     }
@@ -193,7 +196,7 @@ std::unordered_set<Tile*> TileManager::getConnectedTiles(Tile* tile) {
 
     bool use_reverse = (tileCol % 2 == 0);
 
-    #ifdef LOGGING
+    #if TILE_LOGGING
     SDL_Log("Getting Coords for tile at (%d, %d)", tileRow, tileCol);
     #endif
 
@@ -228,23 +231,35 @@ std::unordered_set<Tile*> TileManager::getConnectedTilesInRadius(Tile* tile, int
     for (int r = 0; r < radius; r++) {
         for (auto* t : nextTiles) {
             
+            #if TILE_LOGGING
             SDL_Log("Acessing Tile (%d, %d)", t->getCoords().x, t->getCoords().y);
+            #endif
 
             if (visitedTiles.find(t) == visitedTiles.end()) {
 
                 // set tile t to be visited
+                #if TILE_LOGGING
                 SDL_Log("Tile has not been visited, adding to visited set");
+                #endif
+
                 if (t != tile) {visitedTiles.insert(t);}
 
                 // run getConnectedTiles() on each tile t
+                #if TILE_LOGGING
                 SDL_Log("Investigating what this tile is connected to");
+                #endif
+
                 for (auto nt: getConnectedTiles(t)) {
                     tmpTiles.insert(nt);
                 }
             }
         }
-        
+
+
+        #if TILE_LOGGING
         SDL_Log("TmpTiles has %ld len", tmpTiles.size());
+        #endif
+
         nextTiles.clear();
         std::swap(nextTiles, tmpTiles);
         
@@ -288,7 +303,7 @@ void TileManager::generateRandomGrid() {
                     color = BROWN;
                     break;
                 default:
-                    color = GRAY;
+                    color = BROWN;
                     break;
             }
             
@@ -297,6 +312,10 @@ void TileManager::generateRandomGrid() {
             
         }
     }
+
+    #if EMPIRE_TEST
+    allTiles[3][3]->setColor(CYAN);
+    #endif
 }
 
 Tile* TileManager::getTile(int r, int c) {

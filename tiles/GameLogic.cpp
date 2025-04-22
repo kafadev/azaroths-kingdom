@@ -30,6 +30,7 @@ GameLogic::GameLogic(TileManager* tm) {
 }
 
 /* Allocates a Yields struct from a coordinate */
+/* These values should be stored later into some config file maybe -> load at compile time */
 Yields* GameLogic::calculateYields(std::unordered_set<Tile*> tiles) {
     Yields* y = new Yields;
 
@@ -55,12 +56,15 @@ Yields* GameLogic::calculateYields(std::unordered_set<Tile*> tiles) {
             y->food += 0.25;
             y->minerals += 0.25;
             
+        } else if (tileType == "Town") {
+            y->population += 3;
+
         } else {
             // do nothing here
         }
     }
 
-    #ifdef LOGGING
+    #if LOGGING
     printYields(y);
     #endif
 
@@ -70,13 +74,13 @@ Yields* GameLogic::calculateYields(std::unordered_set<Tile*> tiles) {
 void GameLogic::incrementTimestep() {
     timestep += 1;
 
-    #ifdef LOGGING
+    #if LOGGING
     SDL_Log("Current Timestep: %d\n", timestep);
     #endif
 }
 
 void GameLogic::printYields(Yields* y) {
-    SDL_Log("Food: %d, Population: %d, Minerals: %d", y->food, y->population, y->minerals);
+    SDL_Log("Food: %f, Population: %f, Minerals: %f", y->food, y->population, y->minerals);
 }
 
 void GameLogic::calculateEmpireDirection(Empire *e) {
@@ -91,7 +95,7 @@ void GameLogic::calculateEmpireDirection(Empire *e) {
     
     e->updateEmpire(y); // update all the empire's values
 
-    // change RANDOM tile to be a TOWN
+    // change RANDOM tile to be a TOWN -> URBAN SPRAWL
     /* reference: https://www.reddit.com/r/cpp_questions/comments/r6fqsb/deleted_by_user/*/
     /* https://stackoverflow.com/questions/39288595/why-not-just-use-stdrandom-device*/
 
@@ -104,13 +108,18 @@ void GameLogic::calculateEmpireDirection(Empire *e) {
     int numberOfTiles = 1; // HARDCODED!  
     std::sample( tiles.begin(), tiles.end(), std::back_inserter(sampledTiles), numberOfTiles, gen);
 
-    // change the random tile into a town
-    for (auto t : sampledTiles) {
-        t->changeToTown();
+    // change the random tile into a town (if expanding)
+    if (e->isEmpireGrowing()) {
+        for (auto t : sampledTiles) {
+            if (t->isValid()) {
+                t->changeToTown();
+            }  
+        }
+    } else {
+        for (auto t : sampledTiles) {
+            t->regressTileColor();
+        }
     }
-    
-    // increment to the next time step
-    incrementTimestep();
 }
 
 void GameLogic::calculateAllEmpiresDirection() {
@@ -121,18 +130,21 @@ void GameLogic::calculateAllEmpiresDirection() {
         assert(e);
 
         // calculate direction of each empire.
-        #ifdef LOGGING
+        #if LOGGING
         SDL_Log("Before:");
         e->printEmpire();
         #endif
         
         calculateEmpireDirection(e);
 
-        #ifdef LOGGING
+        #if LOGGING
         SDL_Log("After:");
         e->printEmpire();
         #endif
     }
+
+    // increment to the next time step
+    incrementTimestep();
 }
 
 

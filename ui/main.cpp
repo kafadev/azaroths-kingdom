@@ -7,9 +7,7 @@
 #include <SDL2/SDL_mixer.h>
 #include "../tiles/utils.hpp"
 #include "../tiles/GameLogic.hpp"
-
-#define MUSIC false
-
+#include "../tiles/utils.hpp"
 
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
@@ -26,13 +24,13 @@ int colorRandomTilesYellow(void* data) {
         float r = rand() % ROWS;
         float c = rand() % COLS;
 
-        #ifdef LOGGING
+        #if LOGGING
         SDL_Log(tm->getTile(r,c)->getTileType().c_str());
         #endif
     
         tm->getTile(r, c)->setColor(YELLOW);
 
-        #ifdef LOGGING
+        #if LOGGING
         SDL_Log(tm->getTile(r,c)->getTileType().c_str());
         #endif 
     }
@@ -81,16 +79,20 @@ int playGame(void* data) {
     // initialize TileManager
     TileManager* tm = (TileManager*) data;
 
-    // lock some kind of lock (doing operations on tm)
+    // lock some kind of lock (doing operations on tm) ;; for now not a problem since only one thread manipulates it. 
 
     // Initialize GameLogic
     GameLogic gl = GameLogic(tm);
 
     // run infinitely
-    while (true) {
+    int x = ITERATIONS;
+    while (x != 0) {
         gl.calculateAllEmpiresDirection();
-        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        x--;
     }
+
+    return 0;
 
     // unlock lock
 }
@@ -165,7 +167,7 @@ int main(int argc, char* argv[]) {
     SDL_CaptureMouse(SDL_TRUE);
 
     // run loop of music (DISABLED)
-    #ifdef MUSIC 
+    #if MUSIC 
     SDL_CreateThread(playMusic, "music", nullptr);
     #endif
 
@@ -183,11 +185,11 @@ int main(int argc, char* argv[]) {
 
         if (event.type == SDL_KEYDOWN) {
             
-            #ifdef LOGGING
+            #if LOGGING
             SDL_Log("Thread Activated");
             #endif 
 
-            SDL_CreateThread(colorNearbyTiles, "test", &tm); // currently hardcoded to 3
+            SDL_CreateThread(playGame, "test", &tm); // currently hardcoded to 3
 
         }
     }

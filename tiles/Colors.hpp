@@ -1,8 +1,17 @@
+#pragma once 
+
 struct Color {
     int r;
     int g;
     int b;
     int a;
+};
+
+/* Generated Comparator for Color Struct */
+struct ColorComparator {
+    bool operator()(const Color& lhs, const Color& rhs) const {
+        return std::tie(lhs.r, lhs.g, lhs.b, lhs.a) < std::tie(rhs.r, rhs.g, rhs.b, rhs.a);
+    }
 };
 
 // Calculate these at compile time

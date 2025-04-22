@@ -26,6 +26,7 @@ Tile::~Tile() {
 Tile::Tile(std::string name, const Color color) {
     this->name = name;
     this->color = color;
+    this->originalColor = color;
 };
 
 const std::string& Tile::getName() {
@@ -63,4 +64,21 @@ std::string Tile::getTileType() {
 
 void Tile::changeToTown() {
     this->color = GRAY;
+}
+
+void Tile::regressTileColor() {
+    this->color = originalColor;
+}
+
+bool Tile::isOceanTile() {
+    ColorComparator cmp; 
+    return cmp(this->color, BLUE);
+}
+bool Tile::isVoidTile() {
+    ColorComparator cmp;
+    return cmp(this->color, BLACK);
+}
+
+bool Tile::isValid() {
+    return !(this->isVoidTile() || this->isOceanTile());
 }
