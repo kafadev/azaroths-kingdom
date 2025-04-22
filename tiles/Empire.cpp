@@ -9,7 +9,8 @@ Empire::~Empire() {
 // Default constructor -- populate default values
 Empire::Empire() {
     this->food = 50;
-    this->population = 5;        
+    this->population = 5;    
+    this->capitalPopulation = STARTING_CAPITAL_POPULATION;    
     this->number_of_towns = 0;
     this->minerals = 50;   
     this->influence = 0;
@@ -23,6 +24,7 @@ Empire::Empire(float food, float population,  int number_of_towns, float mineral
     this->number_of_towns = number_of_towns;
     this->minerals = minerals;   
     this->name = name;
+    this->capitalPopulation = STARTING_CAPITAL_POPULATION;   
 }
 
 bool Empire::isEmpireGrowing() {
@@ -43,14 +45,16 @@ void Empire::updateEmpire(Yields* yields) {
 
     this->influence += calculateInfluence(yields);
     this->food += (yields->food - this->population);
-    this->population += yields->population;
+    this->population = yields->population + this->capitalPopulation;
     this->minerals += yields->minerals;
+
+    #if DISABLE_NEGATIVE_FOOD
+    if (this->food < 0) {this->food = 0;}
+    #endif
  
     #if LOGGING
     printEmpire();
-
     #endif
-
 
 }
 

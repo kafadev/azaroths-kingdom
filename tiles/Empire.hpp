@@ -25,9 +25,10 @@ class Empire {
     private: 
         float food;               /* Used to calculate growth */
         float population;         /* Used to calculate growth */
-        int number_of_towns;    /* Used for influence multiplier */
+        int   number_of_towns;    /* Used for influence multiplier */
         float minerals;           /* Used for military strength */
         float influence;
+        float capitalPopulation;
         std::string name;
 
         Coords capitalCoords;

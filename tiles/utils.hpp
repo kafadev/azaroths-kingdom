@@ -10,7 +10,12 @@
 
 /* Phase 1 testing */
 #define EMPIRE_TEST true
+#define STARTING_CAPITAL_POPULATION 5
+#define DISABLE_NEGATIVE_FOOD true
 
+// relating to main() file
+#define MUSIC false
+#define ITERATIONS 1000
 
 /* Universally used yields struct to collect information from tiles */
 struct Yields {

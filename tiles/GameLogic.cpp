@@ -30,6 +30,7 @@ GameLogic::GameLogic(TileManager* tm) {
 }
 
 /* Allocates a Yields struct from a coordinate */
+/* These values should be stored later into some config file maybe -> load at compile time */
 Yields* GameLogic::calculateYields(std::unordered_set<Tile*> tiles) {
     Yields* y = new Yields;
 
@@ -56,7 +57,7 @@ Yields* GameLogic::calculateYields(std::unordered_set<Tile*> tiles) {
             y->minerals += 0.25;
             
         } else if (tileType == "Town") {
-            y->population += 1;
+            y->population += 3;
 
         } else {
             // do nothing here
@@ -113,7 +114,9 @@ void GameLogic::calculateEmpireDirection(Empire *e) {
             t->changeToTown();
         }
     } else {
-        // currently do nothing. stagnate. 
+        for (auto t : sampledTiles) {
+            t->regressTileColor();
+        }
     }
 }
 

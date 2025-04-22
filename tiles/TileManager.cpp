@@ -171,6 +171,9 @@ Tile* TileManager::getBottomRightItem(int r, int c) {
 
 // helper function to push back
 void push_back_non_null(Tile* foundTile, std::unordered_set<Tile*>* tiles) {
+
+    assert(tiles); // ensure that the tiles unordered set is actually valid 
+
     if (foundTile) {
         tiles->insert(foundTile);
     }

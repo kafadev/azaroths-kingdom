@@ -32,12 +32,14 @@ class Tile {
 
         /* Prototype Functions (to be deprecated later) */
         void changeToTown();
+        void regressTileColor();
         
 
     private:
         std::string name;
         Coords coords;
         Color color;
+        Color originalColor; 
 
         Yields resources; /* To be custom-set in each inheriting class */
 };

@@ -7,9 +7,7 @@
 #include <SDL2/SDL_mixer.h>
 #include "../tiles/utils.hpp"
 #include "../tiles/GameLogic.hpp"
-
-#define MUSIC false
-
+#include "../tiles/utils.hpp"
 
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
@@ -87,7 +85,7 @@ int playGame(void* data) {
     GameLogic gl = GameLogic(tm);
 
     // run infinitely
-    int x = 10;
+    int x = ITERATIONS;
     while (x != 0) {
         gl.calculateAllEmpiresDirection();
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
