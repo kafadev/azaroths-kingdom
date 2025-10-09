@@ -1,13 +1,17 @@
 # Azaroth's Kingdom
 
 ## What is this?
-This is a work-in-progress game intended to be a pseudo-civilization 6 clone. 
+- This is a work-in-progress game intended to be a pseudo-civilization simulator.
+- - Calculate resources from nearby tiles to figure out if empire is growing/shrinking
+- - Rinse / repeat across multiple timesteps
+- A lot of the code follows C-style paradigms, but C++ data structures are used. 
 
 ### Proposed Ruleset
 In this game, civilizations compete for minerals, food, and influence. There is one moveable character who can influence what tiles will turn into. He can move once each timestep. Each timestep, neighboring tiles will either improve or decay, creating farms, mines, or towns, or falling into disarray. Once a town is created, it can only shrink via food loss or if the bureaucrat removes it. Each variant of the tile results in different yields to the Empire, which in turn affects resource acquisition, influence, and other factors. 
 
 ### Immediate necessities (good beginner issues) 
 - Create a class system with Tiles -> Tiles into CapitalCity Tile, Mineral Tile, etc. (HIGH) 
+- - probably best to create some form of a builder class to prevent large class dependency problems
 - Create textures for tiles instead of using COLORS (LOW) 
 - Write logic to calculate food, minerals, population, etc from tiles surrounding a town / capital 
 
@@ -25,7 +29,6 @@ Winning conditions are a work-in-progress. I want to get a strong working protot
 - compile the program via 'make' using the makefile. This creates executable called 'game'.
 - run game on linux via ./game
 
-
 ## Misc
 
 ### Example Map (Randomized, Apr 2025)
@@ -34,11 +37,11 @@ Winning conditions are a work-in-progress. I want to get a strong working protot
 ### Example Example of Growth & Shrinking (Randomized, Apr 2025)
 [Screencast from 2025-04-21 17-24-17.webm](https://github.com/user-attachments/assets/bd1a0069-386f-40b7-b32b-2c7b34baf734)
 
-
 ### Possible rendering issues
 - firstly, make sure SDL2 is installed
 - SDL2 might have rendering problem depending on Wayland / Xorg usage. See if switching between these helps.
 - certain laptops resolutions might render hexagons with a blurry edge (currently investigating) 
+- SDL2 mix audio can come separately as a download (ensure this is downloaded to allow main() to compile/run)
 
 ### Reach out if you'd like to contribute / help.
 - See my profile for more information 
