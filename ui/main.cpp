@@ -9,13 +9,11 @@
 #include "../tiles/GameLogic.hpp"
 #include "../tiles/utils.hpp"
 
-const int SCREEN_WIDTH = 1920;
-const int SCREEN_HEIGHT = 1080;
-
+/// @brief Randomly select & color tiles yellow
+/// @param data 
+/// @return int status of function (C-style)
 int colorRandomTilesYellow(void* data) {
-    //HexGrid* hexGrid, TileManager* tm, SDL_Renderer* renderer 
-    //hexGrid->rippleEffect(renderer, tm->getTile(0, 0));
-    TileManager* tm = (TileManager*) data;
+    TileManager* tm = static_cast<TileManager*> data;
 
     for (int i = 0; i < 5; i++) {
         
@@ -40,19 +38,24 @@ int colorRandomTilesYellow(void* data) {
     return 0;
 }
 
-int colorNearbyTiles(void* data) {
-    TileManager* tm = (TileManager*) data;
-    // std::set<Tile*> tiles = tm->getConnectedTiles(tm->getTile(3,3));
+/// @brief Color nearby tiles, starting from hardcoded (3,3)
+/// @param tm : TileManager in use
+/// @return status code
+int colorNearbyTiles(TileManager* tm) 
+{
+    // hardcoded start items 
+    int r = 3;
+    int c = 3;
 
-    // for (auto t : tiles) {
-    //     std::string s = std::to_string(t->getCoords().x) + " " + std::to_string(t->getCoords().y);
-    //     SDL_Log(s.c_str());
-    // }
-    tm->colorNearbyTiles(tm->getTile(3,3));
+    tm->colorNearbyTiles(tm->getTile(r, c));
 
+    // return success 
     return 0;
 }
 
+/// @brief Plays a royalty free track on repeat 
+/// @param data unused param in case later params added
+/// @return status/error code
 int playMusic(void* data) {
 
     // Load the WAV file
@@ -73,13 +76,13 @@ int playMusic(void* data) {
     return 0;
 }
 
-/* Perhaps good to change this in the future to a more appropriate name */
-int playGame(void* data) {
+/// @brief Run the game
+/// @param tm : current tile maanger 
+/// @return status/error code
+int playGame(TileManager* tm) {
 
-    // initialize TileManager
-    TileManager* tm = (TileManager*) data;
-
-    // lock some kind of lock (doing operations on tm) ;; for now not a problem since only one thread manipulates it. 
+    // future : lock some kind of lock (doing operations on tm) 
+    //          for now not a problem since only one thread manipulates it. 
 
     // Initialize GameLogic
     GameLogic gl = GameLogic(tm);
@@ -94,9 +97,13 @@ int playGame(void* data) {
 
     return 0;
 
-    // unlock lock
+    // possibly unlock lock here (if implemented later)
 }
 
+/// @brief Classic C-style main() function to run program
+/// @param argc unused
+/// @param argv unused 
+/// @return status/error code
 int main(int argc, char* argv[]) {
 
     /* Set up video-related things */
@@ -200,5 +207,3 @@ int main(int argc, char* argv[]) {
     SDL_Quit();
     return 0;
 }
-
-

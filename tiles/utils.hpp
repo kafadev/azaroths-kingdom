@@ -17,6 +17,13 @@
 #define MUSIC false
 #define ITERATIONS 1000
 
+// relating to tiles themselves
+#define NUM_CONNECTED 6
+
+// display 
+#define SCREEN_WIDTH = 1920;
+#define SCREEN_HEIGHT = 1080;
+
 /* Universally used yields struct to collect information from tiles */
 struct Yields {
     float food;               /* Used to calculate growth */

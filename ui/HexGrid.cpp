@@ -37,7 +37,13 @@ void HexGrid::setColor(SDL_Renderer* renderer, const Color color) {
 }
 
 
-/* Generated function based on previous drawHexagon that fills in the hexagons with respective color */
+/*  Draw a singular hexagon at Coords
+    Note: Generated function based on previous drawHexagon 
+    
+    @param renderer   : current SDL renderer object in use
+    @param tileCoords : coords at which hexagon should be drawn
+    @param color      : color of hexagon 
+*/
 void HexGrid::drawHexagon(SDL_Renderer* renderer, Coords tileCoords, const Color color) {
     const int NUM_POINTS = 6;
     SDL_Vertex vertices[NUM_POINTS];
@@ -75,7 +81,14 @@ void HexGrid::drawHexagon(SDL_Renderer* renderer, Coords tileCoords, const Color
     SDL_RenderDrawLines(renderer, points, NUM_POINTS + 1);
 }
 
-/* Generated function to draw a singular digit */
+/* Draw a singular digit
+   Note: Generated function 
+   
+   @param renderer : current renderer object
+   @param digit : what digit to draw 
+   @param x : x coordinate to draw at 
+   @param y : y coordinate to draw at 
+*/
 void drawDigit(SDL_Renderer* renderer, char digit, int x, int y) {
     switch (digit) {
         case '0':
@@ -140,7 +153,15 @@ void drawDigit(SDL_Renderer* renderer, char digit, int x, int y) {
     }
 }
 
-/* Generated function that utilizes drawDigit to draw digits onto each tile */
+/* Draw a Number
+   Note : Generated function 
+   Note : Uses DrawDigit() 
+
+   @param renderer : current SDL renderer in use
+   @param num : number to draw 
+   @param x : x coordinate to start drawing at 
+   @param y : y coordinate to start drawing at
+*/
 void drawNumber(SDL_Renderer* renderer, int num, int x, int y) {
     // Convert number to string
     std::string numStr = std::to_string(num);
@@ -153,7 +174,13 @@ void drawNumber(SDL_Renderer* renderer, int num, int x, int y) {
     }
 }
 
-/* Generated Render function :: generates hexagonal tile with filled color */
+/* Render the entire HexGrid 
+   Note : Generated Render function
+   Purpose : Gets all tiles and renders colors accordingly. 
+             Relies on the TileManger object, no params
+   
+   @param renderer : current SDL renderer in use
+*/
 void HexGrid::render(SDL_Renderer* renderer) {
     // Clear the screen
     setColor(renderer, BLACK); // Create black background
@@ -208,16 +235,9 @@ void HexGrid::updateDisplayedTileColor(SDL_Renderer* renderer, Tile* tile) {
     drawHexagon(renderer, tile->getCoords(), tile->getColor());
 }
 
-/* Generated Pair Hash*/
-struct pair_hash {
-    template <typename T1, typename T2>
-    std::size_t operator()(const std::pair<T1, T2>& p) const {
-        std::size_t h1 = std::hash<T1>{}(p.first);
-        std::size_t h2 = std::hash<T2>{}(p.second);
-        return h1 ^ (h2 << 1); // Combines the hashes
-    }
-};
-
+/// @brief Generate a Ripple Effect starting at a particular tile
+/// @param renderer : current SDL renderer in use
+/// @param tile     : starting tile
 void HexGrid::rippleEffect(SDL_Renderer* renderer, Tile* tile) {
 
     std::unordered_set<std::pair<int, int>, pair_hash> old_items = {std::make_pair(tile->getCoords().x, tile->getCoords().y)};
@@ -253,10 +273,4 @@ void HexGrid::rippleEffect(SDL_Renderer* renderer, Tile* tile) {
         old_items.clear();
         std::swap(old_items, new_items);
     }
-}
-
-Tile* HexGrid::getTileFromCoords(Coords coords) {
-
-    return nullptr;
-
 }
