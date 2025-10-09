@@ -9,18 +9,24 @@
 class Empire {
 
     public: 
-        Empire();
-        Empire(float food, float population,  int number_of_towns, float minerals, std::string name);
-        ~Empire();
 
-        bool isEmpireGrowing();
-        float calculateInfluence(Yields* yields);
-        void updateEmpire(Yields* yields);
-        float calculateMilitaryStrength(Yields* yields);
+                    // constructors 
+                    Empire();
+                    Empire(float food, 
+                        float population,  
+                        int number_of_towns, 
+                        float minerals, 
+                        std::string name);
+                    ~Empire();
+
+        bool        IsEmpireGrowing();
+        float       CalculateInfluence(Yields* yields);
+        void        UpdateEmpire(Yields* yields);
+        float       CalculateMilitaryStrength(Yields* yields);
 
         /* Getters */
-        Coords getCapitalCoords();
-        void printEmpire();
+        Coords      GetCapitalCoords();
+        void PrintEmpire();
 
     private: 
         float food;               /* Used to calculate growth */

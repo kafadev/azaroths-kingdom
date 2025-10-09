@@ -1,13 +1,18 @@
 #include "Empire.hpp"
-#include <vector> 
 #include "SDL2/SDL.h"
 
-Empire::~Empire() {
+// SDL imports 
+#include <vector> 
+
+// Empty constructor -- do nothing
+Empire::~Empire() 
+{
 
 }
 
 // Default constructor -- populate default values
-Empire::Empire() {
+Empire::Empire() 
+{
     this->food = 50;
     this->population = 5;    
     this->capitalPopulation = STARTING_CAPITAL_POPULATION;    
@@ -18,7 +23,20 @@ Empire::Empire() {
     this->name = "Test Empire";
 };
 
-Empire::Empire(float food, float population,  int number_of_towns, float minerals, std::string name) {
+/*
+    Constructor 
+    Takes in starting parameters for an Empire.  
+
+    @param food : 
+    @param population :
+    @param number_of_towns :
+    @param minerals :
+    @param name
+*/
+Empire::Empire(float food, float population,  
+               int number_of_towns, float minerals, 
+               std::string name) 
+{
     this->food = food;
     this->population = population;        
     this->number_of_towns = number_of_towns;
@@ -27,44 +45,79 @@ Empire::Empire(float food, float population,  int number_of_towns, float mineral
     this->capitalPopulation = STARTING_CAPITAL_POPULATION;   
 }
 
-bool Empire::isEmpireGrowing() {
+/*
+    Checks if the empire is in a growing state based on food and population
+
+    @returns true/false based on growing/shrinking of empire
+
+*/
+bool Empire::IsEmpireGrowing() 
+{
     return this->food > this->population;
 }
 
-/* Influence is determined primarily from the population values, but also some yield values */
-float Empire::calculateInfluence(Yields* yields) {
+/*  Calculates influence value at a timestep
+    Influence is determined primarily from the population values
+
+    @param yields : struct with yields per timestep
+*/
+float Empire::CalculateInfluence(Yields* yields) 
+{
     return yields->population + 0.75 * (yields->minerals);
 }
 
-float Empire::calculateMilitaryStrength(Yields* yields) {
+ 
+/* Calculates Military Strength of an Empire at a timestep 
+   Military strength is determined by minerals (metal for medieval weaponry) and food
+
+   @param Yields* yields
+*/
+float Empire::CalculateMilitaryStrength(Yields* yields) 
+{
     return yields->minerals + 0.5 * yields->food;
 }
 
-/* Function to take a Yields item and calculate influence, etc. */
-void Empire::updateEmpire(Yields* yields) {
+/* Recalculate Empire values based on yields at a timestep
+   Recalculates resources : food, influence, population, minerals
 
-    this->influence += calculateInfluence(yields);
+   @param Yields* yields
+*/
+void Empire::UpdateEmpire(Yields* yields) 
+{
+
+    this->influence += CalculateInfluence(yields);
     this->food += (yields->food - this->population);
     this->population = yields->population + this->capitalPopulation;
     this->minerals += yields->minerals;
 
+    // temporary debugging methods
     #if DISABLE_NEGATIVE_FOOD
     if (this->food < 0) {this->food = 0;}
     #endif
  
     #if LOGGING
-    printEmpire();
+    PrintEmpire();
     #endif
 
 }
 
-/* Getters */
+/* ------ Getters ----- */
 
-Coords Empire::getCapitalCoords() {
+
+/* Return the coordinates of capital city of empire
+
+   @return Coords struct 
+*/
+Coords Empire::GetCapitalCoords() 
+{
     return this->capitalCoords;
 };
 
-void Empire::printEmpire() {
+/* Debugging function to print all empire values
+   Warning: Relies on SDL_Log() to print
+*/
+void Empire::PrintEmpire() 
+{
     SDL_Log("============\n"
             "Name: %s\n"
             "Food: %f\n"
@@ -80,6 +133,6 @@ void Empire::printEmpire() {
             this->influence, 
             this->population, 
             this->number_of_towns, 
-            getCapitalCoords().x, 
-            getCapitalCoords().y);
+            GetCapitalCoords().x, 
+            GetCapitalCoords().y);
 }
